@@ -10,7 +10,7 @@ public interface IController {
 	/**
 	 * Control.
 	 */
-	public void start();
+	void start();
 
 	/**
 	 * Order perform.
@@ -18,7 +18,7 @@ public interface IController {
 	 * @param controllerOrder
 	 *          the controller order
 	 */
-	public void orderPerform(ControllerOrder controllerOrder);
+	void orderPerform(ControllerOrder controllerOrder);
 
-	public String[][] parser(String tilemap);
+	String[][] parser(String tilemap);
 }

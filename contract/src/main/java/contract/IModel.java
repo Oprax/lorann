@@ -47,4 +47,6 @@ public interface IModel {
 	 *          the key
 	 */
 	void loadMap(String key);
+
+	void Mobile(String imagePath, int x, int y, final boolean permeability);
 }

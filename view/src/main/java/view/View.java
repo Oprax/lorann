@@ -20,10 +20,17 @@ public class View implements IView, Runnable {
 	/** The frame. */
 	private final ViewFrame viewFrame;
 
+    /**
+     * Return Hashtable<Character, String> of associate sprite
+     * @return assocSprite
+     */
     public Hashtable<Character, String> getAssocSprite() {
         return assocSprite;
     }
 
+    /**
+     * Array have letter in key and the sprite's name in value
+     */
     private Hashtable<Character, String> assocSprite = new Hashtable<Character, String>();
 
 	/**
@@ -38,6 +45,9 @@ public class View implements IView, Runnable {
 		SwingUtilities.invokeLater(this);
 	}
 
+    /**
+     * Associate all sprite with a letter representing hin in tileMap
+     */
     private void fillAssoc() {
         this.assocSprite.put('B', "bone.png");
         this.assocSprite.put('K', "crystal_ball.png");
@@ -64,15 +74,15 @@ public class View implements IView, Runnable {
 	protected static ControllerOrder keyCodeToControllerOrder(final int keyCode) {
 		switch (keyCode) {
 			case KeyEvent.VK_G:
-				return ControllerOrder.English;
+				return ControllerOrder.Map1;
 			case KeyEvent.VK_F:
-				return ControllerOrder.Francais;
+				return ControllerOrder.Map2;
 			case KeyEvent.VK_D:
-				return ControllerOrder.Deutsch;
+				return ControllerOrder.Map3;
 			case KeyEvent.VK_I:
-				return ControllerOrder.Indonesia;
+				return ControllerOrder.Map4;
 			default:
-				return ControllerOrder.English;
+				return ControllerOrder.Map5;
 		}
 	}
 

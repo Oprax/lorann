@@ -5,9 +5,9 @@ import contract.IController;
 import contract.IModel;
 import contract.IView;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Controller.
  */
@@ -32,13 +32,14 @@ public class Controller implements IController {
 		this.setModel(model);
 	}
 
-	/*
-	 *
+	/**
+	 * Entry point of Controller
 	 * 
 	 * @see contract.IController#start()
 	 */
 	public void start() {
-		this.view.printMessage("Appuyer sur les touches 'E', 'F', 'D' ou 'I', pour afficher Hello world dans la langue d votre choix.");
+        this.orderPerform(ControllerOrder.Map1);
+		//this.view.printMessage("Appuyer sur les touches 'E', 'F', 'D' ou 'I', pour afficher Hello world dans la langue d votre choix.");
 	}
 
 	/**
@@ -62,12 +63,19 @@ public class Controller implements IController {
 	}
 
 
+    /**
+     * Parse tileMap to associate a Letter to a sprite
+     *
+     * @param tilemap TileMap in text format (with letter)
+     * @see view.View#fillAssoc()
+     */
     public String[][] parser(String tilemap)
 	{
-		String[] lines = tilemap.split("\n");
+		System.out.println(tilemap);
+        String[] lines = tilemap.split("\n");
         int x = lines.length;
         int y = lines[0].length();
-        String[][] map = new String[x][y];
+        String[][] map = new String[y][x];
 
         Hashtable<Character, String> assocSprite = this.view.getAssocSprite();
 
@@ -75,34 +83,37 @@ public class Controller implements IController {
         {
             for(int j = 0; j < y; j++)
             {
-                map[i][j] = assocSprite.get(lines[i].charAt(j));
+                map[j][i] = assocSprite.get(lines[i].charAt(j));
             }
         }
 
         return map;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
+	/**
+	 * @param controllerOrder Load map from model
+     *
 	 * @see contract.IController#orderPerform(contract.ControllerOrder)
 	 */
 	public void orderPerform(final ControllerOrder controllerOrder) {
 		switch (controllerOrder) {
-			case English:
-				this.model.loadMessage("GB");
+            case Map1:
+				this.model.loadMap("MAP1");
 				break;
-			case Francais:
-				this.model.loadMessage("FR");
+            case Map2:
+				this.model.loadMap("MAP2");
 				break;
-			case Deutsch:
-				this.model.loadMessage("DE");
+            case Map3:
+				this.model.loadMap("MAP3");
 				break;
-			case Indonesia:
-				this.model.loadMessage("ID");
+            case Map4:
+				this.model.loadMap("MAP4");
 				break;
-
+            case Map5:
+                this.model.loadMap("MAP5");
+                break;
 			default:
+                this.model.loadMap("TEST");
 				break;
 		}
 	}

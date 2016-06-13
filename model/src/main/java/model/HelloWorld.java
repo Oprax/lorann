@@ -8,13 +8,13 @@ package model;
 class HelloWorld extends Entity {
 
 	/** The id. */
-	private int id;
+	private int			id;
 
 	/** The key. */
-	private String key;
+	private String	key;
 
 	/** The message. */
-	private String message;
+	private String	message;
 
 	/**
 	 * Instantiates a new hello world.

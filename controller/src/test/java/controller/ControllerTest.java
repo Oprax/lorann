@@ -57,4 +57,18 @@ public class ControllerTest {
 
         assertArrayEquals(map, expectedMap);
     }
+
+    @Test
+    public void TestParserLoadMap() throws Exception {
+        this.model.loadMap("TEST");
+        String[][] map = this.controller.parser(
+                this.model.getMap()
+        );
+        String[][] expectedMap = {
+                {"bone.png", "", "vertical_bone.png", "", "horizontal_bone.png", "", "purse.png", "", "lorann_b.png"},
+                {"monster_1.png", "", "monster_2.png", "", "monster_3.png", "", "monster_4.png", "", ""},
+                {"gate_closed.png", "", "gate_open.png", "", "", "", "", "", ""}
+        };
+        assertArrayEquals(map, expectedMap);
+    }
 }

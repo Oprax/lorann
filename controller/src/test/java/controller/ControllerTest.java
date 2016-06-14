@@ -31,30 +31,20 @@ public class ControllerTest {
         this.model = new Model();
         this.view = new View(this.model);
         this.controller = new Controller(this.view, this.model);
+        this.view.setController(controller);
     }
     
     @Test
-    public void TestControl() throws Exception {
-
-    }
-
-    @Test
-    public void TestOrderPerform() throws Exception {
-
-    }
-    
-    @Test
-    public void TestParser() throws Exception {
-        String[][] map = this.controller.parser("B V H P L\n" +
-                "1 2 3 4  \n" +
-                "C O      ");
+    public void TestParserTestMap() throws Exception {
+        String[][] map = this.controller.parser("BVHPL\n" +
+                "1234 \n" +
+                "CO   ");
 
         String[][] expectedMap = {
-                {"bone.png", "", "vertical_bone.png", "", "horizontal_bone.png", "", "purse.png", "", "lorann_b.png"},
-                {"monster_1.png", "", "monster_2.png", "", "monster_3.png", "", "monster_4.png", "", ""},
-                {"gate_closed.png", "", "gate_open.png", "", "", "", "", "", ""}
+                {"bone.png", "vertical_bone.png", "horizontal_bone.png", "purse.png", "lorann_b.png"},
+                {"monster_1.png", "monster_2.png", "monster_3.png", "monster_4.png", ""},
+                {"gate_closed.png", "gate_open.png", "", "", ""}
         };
-
         assertArrayEquals(map, expectedMap);
     }
 
@@ -65,9 +55,9 @@ public class ControllerTest {
                 this.model.getMap()
         );
         String[][] expectedMap = {
-                {"bone.png", "", "vertical_bone.png", "", "horizontal_bone.png", "", "purse.png", "", "lorann_b.png"},
-                {"monster_1.png", "", "monster_2.png", "", "monster_3.png", "", "monster_4.png", "", ""},
-                {"gate_closed.png", "", "gate_open.png", "", "", "", "", "", ""}
+                {"bone.png", "vertical_bone.png", "horizontal_bone.png", "purse.png", "lorann_b.png"},
+                {"monster_1.png", "monster_2.png", "monster_3.png", "monster_4.png", ""},
+                {"gate_closed.png", "gate_open.png", "", "", ""}
         };
         assertArrayEquals(map, expectedMap);
     }

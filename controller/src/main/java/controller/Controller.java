@@ -67,15 +67,16 @@ public class Controller implements IController {
      * Parse tileMap to associate a Letter to a sprite
      *
      * @param tilemap TileMap in text format (with letter)
-     * @see view.View#fillAssoc()
+     * @see contract.IController#parser(String)
      */
-    public String[][] parser(String tilemap)
-	{
-		System.out.println(tilemap);
+    public String[][] parser(String tilemap) {
         String[] lines = tilemap.split("\n");
         int x = lines.length;
         int y = lines[0].length();
-        String[][] map = new String[y][x];
+        String[][] map = new String[x][y];
+
+        for(String[] row: map)
+            Arrays.fill(row, "");
 
         Hashtable<Character, String> assocSprite = this.view.getAssocSprite();
 
@@ -83,9 +84,17 @@ public class Controller implements IController {
         {
             for(int j = 0; j < y; j++)
             {
-                map[j][i] = assocSprite.get(lines[i].charAt(j));
+                char c = lines[i].charAt(j);
+                System.out.printf("FUCK : '%s'%n", c);
+                String sprite = assocSprite.get(c);
+                System.out.printf("DICK : '%s'%n", sprite);
+                if (sprite != null) {
+                    map[i][j] = sprite;
+                }
             }
         }
+
+        System.out.println(Arrays.deepToString(map));
 
         return map;
 	}
@@ -111,6 +120,18 @@ public class Controller implements IController {
 				break;
             case Map5:
                 this.model.loadMap("MAP5");
+                break;
+            case Map6:
+                this.model.loadMap("MAP6");
+                break;
+            case Map7:
+                this.model.loadMap("MAP7");
+                break;
+            case Map8:
+                this.model.loadMap("MAP8");
+                break;
+            case Map9:
+                this.model.loadMap("MAP9");
                 break;
 			default:
                 this.model.loadMap("TEST");

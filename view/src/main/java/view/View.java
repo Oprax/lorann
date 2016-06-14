@@ -41,8 +41,8 @@ public class View implements IView, Runnable {
 	 */
 	public View(final IModel model) {
 		this.viewFrame = new ViewFrame(model);
-        this.fillAssoc();
 		SwingUtilities.invokeLater(this);
+		this.fillAssoc();
 	}
 
     /**
@@ -83,8 +83,18 @@ public class View implements IView, Runnable {
 				return ControllerOrder.Map4;
             case KeyEvent.VK_NUMPAD5:
                 return ControllerOrder.Map5;
-			default:
+			case KeyEvent.VK_NUMPAD6:
+				return ControllerOrder.Map6;
+			case KeyEvent.VK_NUMPAD7:
+				return ControllerOrder.Map7;
+			case KeyEvent.VK_NUMPAD8:
+				return ControllerOrder.Map8;
+			case KeyEvent.VK_NUMPAD9:
+				return ControllerOrder.Map8;
+			case KeyEvent.VK_NUMPAD0:
 				return ControllerOrder.Test;
+			default:
+				return null;
 		}
 	}
 

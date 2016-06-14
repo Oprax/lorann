@@ -7,8 +7,6 @@ import contract.IModel;
 
 /**
  * The Class Model.
- *
- * @author Jean-Aymeric Diet
  */
 public class Model extends Observable implements IModel {
 
@@ -22,44 +20,9 @@ public class Model extends Observable implements IModel {
 	 * Instantiates a new model.
 	 */
 	public Model() {
-		this.map = "";
-	}
-
-
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see contract.IModel#getMessage()
-	 */
-	public String getMessage() {
-		return this.message;
-	}
-
-	/**
-	 * Sets the message.
-	 *
-	 * @param message
-	 *          the new message
-	 */
-	private void setMessage(final String message) {
-		this.message = message;
-		this.setChanged();
-		this.notifyObservers();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see contract.IModel#getMessage(java.lang.String)
-	 */
-	public void loadMessage(final String key) {
-		try {
-			final DAOHelloWorld daoHelloWorld = new DAOHelloWorld(DBConnection.getInstance().getConnection());
-			this.setMessage(daoHelloWorld.find(key).getMessage());
-		} catch (final SQLException e) {
-			e.printStackTrace();
-		}
+        this.map = "B V H P L\n" +
+				"1 2 3 4  \n" +
+				"C O      ";
 	}
 
 	/*

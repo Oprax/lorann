@@ -19,11 +19,11 @@ import javax.swing.JPanel;
 class ViewPanel extends JPanel implements Observer {
 
 	/** The view frame. */
-	private ViewFrame					viewFrame;
+	private ViewFrame viewFrame;
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= -998294702363713521L;
+	private static final long serialVersionUID = -998294702363713521L;
 
-    private static String[][] tileMap = new String[50][50];
+    private String[][] tileMap;
 
 	/**
 	 * Instantiates a new view panel.
@@ -61,8 +61,9 @@ class ViewPanel extends JPanel implements Observer {
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	public void update(final Observable arg0, final Object arg1) {
-        this.tileMap = this.viewFrame.getController().parser(this.viewFrame.getModel().getMap());
-        this.setSize(this.tileMap.length, this.tileMap[0].length);
+        this.tileMap = this.viewFrame.getController().parser(
+                this.viewFrame.getModel().getMap());
+		this.setSize(this.tileMap[0].length, this.tileMap.length);
 		this.repaint();
 	}
 
@@ -85,32 +86,29 @@ class ViewPanel extends JPanel implements Observer {
 	 */
 	@Override
 	protected void paintComponent(final Graphics graphics) {
-        graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
         graphics.setColor(Color.black);
         graphics.fillRect(0, 0, this.getWidth(), this.getHeight());
-        //graphics.drawString(this.getViewFrame().getModel().getMap(), 10, 20);
 
-        for (int i = 0; i < this.tileMap.length; i++)
+        if(this.tileMap != null)
         {
-            for(int j = 0; j < this.tileMap[0].length; j++)
+            for (int i = 0; i < this.tileMap[0].length; i++)
             {
-                if(this.tileMap[i][j].equals(""))
+                for(int j = 0; j < this.tileMap.length; j++)
                 {
-                    System.out.println(i);
-                    System.out.println(j);
-                }
-                else
-                {
-                    System.out.println(String.format("sprite\\%s", this.tileMap[i][j]));
-                    BufferedImage image = null;
-                    try {
-                        image = ImageIO.read(new File(String.format("sprite\\%s", this.tileMap[i][j])));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(!this.tileMap[j][i].equals(""))
+                    {
+                        BufferedImage image = null;
+                        try {
+                            image = ImageIO.read(new File(
+                                    String.format("sprite\\%s", this.tileMap[j][i])));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        graphics.drawImage(image, i*32, j*32, null);
                     }
-                    graphics.drawImage(image, i*32, j*32, null);
                 }
             }
         }
+
     }
 }

@@ -133,6 +133,14 @@ public class Controller implements IController {
             case Map9:
                 this.model.loadMap("MAP9");
                 break;
+			case MOVEUP:
+				this.model.moveUp();
+			case MOVEDOWN:
+				this.model.moveDown();
+			case MOVELEFT:
+				this.model.moveLeft();
+			case MOVERIGHT:
+				this.model.moveRight();
 			default:
                 this.model.loadMap("TEST");
 				break;

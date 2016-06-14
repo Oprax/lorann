@@ -7,16 +7,14 @@ import java.awt.*;
  * Created by Yog on 13/06/2016.
  */
 public abstract class Element {
-    private int         x = 5;
-    private int         y = 5;
+    private int         x;
+    private int         y;
     private Image       image = null;
     private ImageIcon   imageIcon = null;
     private boolean     permeability;
 
-    public Element(int x, int y, String path, final boolean permeability)
+    public Element(String path, final boolean permeability)
     {
-        this.x = x;
-        this.y = y;
         if (path == null) {
             System.out.println("/!\\ERROR/!\\SPRITE PATH FOR " + x + y + " IMAGE IS NULL/!\\ERROR/!\\");
         }
@@ -35,13 +33,5 @@ public abstract class Element {
         return permeability;
     }
 
-    public int getX()
-    {
-        return this.x;
-    }
 
-    public int getY()
-    {
-        return this.y;
-    }
 }

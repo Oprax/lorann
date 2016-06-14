@@ -65,7 +65,7 @@ public class View implements IView, Runnable {
     }
 
     /**
-	 * Key code to controller order.
+	 * CrystalBall code to controller order.
 	 *
 	 * @param keyCode
 	 *          the key code
@@ -93,6 +93,14 @@ public class View implements IView, Runnable {
 				return ControllerOrder.Map8;
 			case KeyEvent.VK_NUMPAD0:
 				return ControllerOrder.Test;
+			case KeyEvent.VK_LEFT:
+				return ControllerOrder.MOVELEFT;
+			case KeyEvent.VK_RIGHT:
+				return ControllerOrder.MOVERIGHT;
+			case KeyEvent.VK_DOWN:
+				return ControllerOrder.MOVEDOWN;
+			case KeyEvent.VK_UP:
+				return ControllerOrder.MOVEUP;
 			default:
 				return null;
 		}

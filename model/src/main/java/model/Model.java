@@ -16,6 +16,9 @@ public class Model extends Observable implements IModel {
 	/** The map */
 	private String map;
 
+	/** Array of every elements in the map */
+	public Element[][] elements;
+
 	/**
 	 * Instantiates a new model.
 	 */

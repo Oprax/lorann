@@ -16,5 +16,9 @@ public enum ControllerOrder {
 	Map7,
 	Map8,
 	Map9,
-	Test
+	Test,
+	MOVEUP,
+	MOVEDOWN,
+	MOVERIGHT,
+	MOVELEFT
 }

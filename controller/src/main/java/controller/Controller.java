@@ -38,7 +38,7 @@ public class Controller implements IController {
 	 * @see contract.IController#start()
 	 */
 	public void start() {
-        this.orderPerform(ControllerOrder.Map1);
+        this.orderPerform(ControllerOrder.TEST);
 		//this.view.printMessage("Appuyer sur les touches 'E', 'F', 'D' ou 'I', pour afficher Hello world dans la langue d votre choix.");
 	}
 
@@ -106,31 +106,31 @@ public class Controller implements IController {
 	 */
 	public void orderPerform(final ControllerOrder controllerOrder) {
 		switch (controllerOrder) {
-            case Map1:
+            case MAP1:
 				this.model.loadMap("MAP1");
 				break;
-            case Map2:
+            case MAP2:
 				this.model.loadMap("MAP2");
 				break;
-            case Map3:
+            case MAP3:
 				this.model.loadMap("MAP3");
 				break;
-            case Map4:
+            case MAP4:
 				this.model.loadMap("MAP4");
 				break;
-            case Map5:
+            case MAP5:
                 this.model.loadMap("MAP5");
                 break;
-            case Map6:
+            case MAP6:
                 this.model.loadMap("MAP6");
                 break;
-            case Map7:
+            case MAP7:
                 this.model.loadMap("MAP7");
                 break;
-            case Map8:
+            case MAP8:
                 this.model.loadMap("MAP8");
                 break;
-            case Map9:
+            case MAP9:
                 this.model.loadMap("MAP9");
                 break;
 			default:

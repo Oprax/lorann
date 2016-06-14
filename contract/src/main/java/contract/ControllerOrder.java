@@ -7,14 +7,14 @@ package contract;
  * @author Romain Muller
  */
 public enum ControllerOrder {
-	Map1,
-	Map2,
-	Map3,
-	Map4,
-	Map5,
-	Map6,
-	Map7,
-	Map8,
-	Map9,
-	Test
+	MAP1,
+	MAP2,
+	MAP3,
+	MAP4,
+	MAP5,
+	MAP6,
+	MAP7,
+	MAP8,
+	MAP9,
+	TEST
 }

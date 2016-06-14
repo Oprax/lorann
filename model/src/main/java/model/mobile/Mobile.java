@@ -1,5 +1,8 @@
 package model.mobile;
 
+import contract.IMobile;
+import contract.IModel;
+import contract.MobileOrder;
 import model.Element;
 
 import java.awt.*;
@@ -8,51 +11,45 @@ import java.awt.event.KeyEvent;
 /**
  * Created by Yog on 13/06/2016.
  */
-public abstract class Mobile extends Element {
-    private int x;
-    private int y;
+public abstract class Mobile extends Element implements IMobile {
+    public Point getPos() {
+        return pos;
+    }
+
+    private Point pos = new Point();
     private int dx = 0;
     private int dy = 0;
 
-    public Mobile(String imagePath, final boolean permeability) {
+    public Mobile(String imagePath, boolean permeability, Point pos) {
         super(imagePath, permeability);
-        this.x = x;
-        this.y = y;
+        this.pos.setLocation(pos);
     }
 
-    public void moveLeft()
+    public void move(MobileOrder order)
     {
-        this.dx = -1;
-    }
-
-    public void moveRight()
-    {
-        this.dx = 1;
-    }
-
-    public void moveUp()
-    {
-        this.dy = -1;
-    }
-
-    public void moveDown()
-    {
-        this.dy = 1;
-    }
-
-    public void move()
-    {
-        this.x += this.dx;
-        this.y += this.dy;
-    }
-
-    public int getX()
-    {
-        return this.x;
-    }
-
-    public int getY()
-    {
-        return this.y;
+        System.out.println("DICK : " + pos);
+        switch (order) {
+            case Left:
+                this.pos.setLocation(
+                        this.pos.getX() - 1,
+                        this.pos.getY());
+                break;
+            case Right:
+                this.pos.setLocation(
+                        this.pos.getX() + 1,
+                        this.pos.getY());
+                break;
+            case Up:
+                this.pos.setLocation(
+                        this.pos.getX(),
+                        this.pos.getY() - 1);
+                break;
+            case Down:
+                this.pos.setLocation(
+                        this.pos.getX(),
+                        this.pos.getY() + 1);
+                break;
+        }
+        System.out.println("BUTT : " + pos);
     }
 }

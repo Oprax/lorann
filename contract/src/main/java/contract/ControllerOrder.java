@@ -7,6 +7,10 @@ package contract;
  * @author Romain Muller
  */
 public enum ControllerOrder {
+	MOVEUP,
+	MOVEDOWN,
+	MOVERIGHT,
+	MOVELEFT,
 	MAP1,
 	MAP2,
 	MAP3,

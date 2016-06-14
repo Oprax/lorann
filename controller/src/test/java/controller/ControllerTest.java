@@ -35,13 +35,12 @@ public class ControllerTest {
         this.model = new Model();
         this.view = new View(this.model);
         this.controller = new Controller(this.view, this.model);
-        this.view.setController(controller);
-        Hashtable<Character, IElement> assocSprite = model.getAssocSprite();
+        this.view.setController(controller);/*
         this.expectedMap = new IElement[][]{
                 {assocSprite.get('B'), assocSprite.get('V'), assocSprite.get('H'), assocSprite.get('P'), assocSprite.get('L')},
                 {assocSprite.get('1'), assocSprite.get('2'), assocSprite.get('3'), assocSprite.get('4'), assocSprite.get(' ')},
                 {assocSprite.get('C'), assocSprite.get('O'), assocSprite.get(' '), assocSprite.get(' '), assocSprite.get(' ')}
-        };
+        };*/
     }
     
     @Test

@@ -6,6 +6,6 @@ package model.motionless;
 public class HorizontalBone extends Motionless {
     public HorizontalBone()
     {
-        super("horitontal_bone.png", false);
+        super("horizontal_bone.png", false);
     }
 }

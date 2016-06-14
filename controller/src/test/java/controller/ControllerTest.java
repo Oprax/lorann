@@ -1,8 +1,11 @@
 package controller;
 
 import contract.IController;
+import contract.IElement;
 import contract.IModel;
 import model.Model;
+import model.mobile.*;
+import model.motionless.*;
 import view.View;
 import contract.IView;
 import org.junit.Before;
@@ -19,6 +22,7 @@ public class ControllerTest {
     private IModel model;
     private IView view;
     private IController controller;
+    private IElement[][] expectedMap;
 
     /**
      * Sets the up.
@@ -32,33 +36,28 @@ public class ControllerTest {
         this.view = new View(this.model);
         this.controller = new Controller(this.view, this.model);
         this.view.setController(controller);
+        Hashtable<Character, IElement> assocSprite = model.getAssocSprite();
+        this.expectedMap = new IElement[][]{
+                {assocSprite.get('B'), assocSprite.get('V'), assocSprite.get('H'), assocSprite.get('P'), assocSprite.get('L')},
+                {assocSprite.get('1'), assocSprite.get('2'), assocSprite.get('3'), assocSprite.get('4'), assocSprite.get(' ')},
+                {assocSprite.get('C'), assocSprite.get('O'), assocSprite.get(' '), assocSprite.get(' '), assocSprite.get(' ')}
+        };
     }
     
     @Test
     public void TestParserTestMap() throws Exception {
-        String[][] map = this.controller.parser("BVHPL\n" +
+        IElement[][] map = this.controller.parser("BVHPL\n" +
                 "1234 \n" +
                 "CO   ");
-
-        String[][] expectedMap = {
-                {"bone.png", "vertical_bone.png", "horizontal_bone.png", "purse.png", "lorann_b.png"},
-                {"monster_1.png", "monster_2.png", "monster_3.png", "monster_4.png", ""},
-                {"gate_closed.png", "gate_open.png", "", "", ""}
-        };
-        assertArrayEquals(map, expectedMap);
+        assertArrayEquals(this.expectedMap, map);
     }
 
     @Test
     public void TestParserLoadMap() throws Exception {
         this.model.loadMap("TEST");
-        String[][] map = this.controller.parser(
+        IElement[][] map = this.controller.parser(
                 this.model.getMap()
         );
-        String[][] expectedMap = {
-                {"bone.png", "vertical_bone.png", "horizontal_bone.png", "purse.png", "lorann_b.png"},
-                {"monster_1.png", "monster_2.png", "monster_3.png", "monster_4.png", ""},
-                {"gate_closed.png", "gate_open.png", "", "", ""}
-        };
-        assertArrayEquals(map, expectedMap);
+        assertArrayEquals(this.expectedMap, map);
     }
 }

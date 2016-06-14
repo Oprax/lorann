@@ -1,7 +1,5 @@
 package contract;
 
-import java.util.Hashtable;
-
 /**
  * The Interface IView.
  *
@@ -16,7 +14,6 @@ public interface IView {
 	 *          the message
 	 */
 	void printMessage(final String message);
-    Hashtable<Character, String> getAssocSprite();
 
 	void setController(IController controller);
 }

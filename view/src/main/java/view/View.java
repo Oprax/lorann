@@ -20,19 +20,6 @@ public class View implements IView, Runnable {
 	/** The frame. */
 	private final ViewFrame viewFrame;
 
-    /**
-     * Return Hashtable<Character, String> of associate sprite
-     * @return assocSprite
-     */
-    public Hashtable<Character, String> getAssocSprite() {
-        return assocSprite;
-    }
-
-    /**
-     * Array have letter in key and the sprite's name in value
-     */
-    private Hashtable<Character, String> assocSprite = new Hashtable<Character, String>();
-
 	/**
 	 * Instantiates a new view.
 	 *
@@ -42,27 +29,7 @@ public class View implements IView, Runnable {
 	public View(final IModel model) {
 		this.viewFrame = new ViewFrame(model);
 		SwingUtilities.invokeLater(this);
-		this.fillAssoc();
 	}
-
-    /**
-     * Associate all sprite with a letter representing hin in tileMap
-     */
-    private void fillAssoc() {
-        this.assocSprite.put('B', "bone.png");
-        this.assocSprite.put('K', "crystal_ball.png");
-        this.assocSprite.put('H', "horizontal_bone.png");
-        this.assocSprite.put('V', "vertical_bone.png");
-        this.assocSprite.put('C', "gate_closed.png");
-        this.assocSprite.put('O', "gate_open.png");
-        this.assocSprite.put('P', "purse.png");
-        this.assocSprite.put('L', "lorann_b.png");
-        this.assocSprite.put('1', "monster_1.png");
-        this.assocSprite.put('2', "monster_2.png");
-        this.assocSprite.put('3', "monster_3.png");
-        this.assocSprite.put('4', "monster_4.png");
-        this.assocSprite.put(' ', "");
-    }
 
     /**
 	 * CrystalBall code to controller order.
@@ -92,7 +59,7 @@ public class View implements IView, Runnable {
 			case KeyEvent.VK_NUMPAD9:
 				return ControllerOrder.MAP9;
 			case KeyEvent.VK_NUMPAD0:
-				return ControllerOrder.TEST;
+				return ControllerOrder.TEST;/*
 			case KeyEvent.VK_LEFT:
 				return ControllerOrder.MOVELEFT;
 			case KeyEvent.VK_RIGHT:
@@ -100,7 +67,7 @@ public class View implements IView, Runnable {
 			case KeyEvent.VK_DOWN:
 				return ControllerOrder.MOVEDOWN;
 			case KeyEvent.VK_UP:
-				return ControllerOrder.MOVEUP;
+				return ControllerOrder.MOVEUP;*/
 			default:
 				return null;
 		}

@@ -1,5 +1,7 @@
 package contract;
 
+
+import java.util.Hashtable;
 import java.util.Observable;
 
 /**
@@ -32,8 +34,6 @@ public interface IModel {
 	 *          the key
 	 */
 	void loadMap(String key);
-	void moveLeft();
-	void moveRight();
-	void moveDown();
-	void moveUp();
+
+	Hashtable<Character, IElement> getAssocSprite();
 }

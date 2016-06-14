@@ -1,9 +1,6 @@
 package controller;
 
-import contract.ControllerOrder;
-import contract.IController;
-import contract.IModel;
-import contract.IView;
+import contract.*;
 
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -39,7 +36,6 @@ public class Controller implements IController {
 	 */
 	public void start() {
         this.orderPerform(ControllerOrder.TEST);
-		//this.view.printMessage("Appuyer sur les touches 'E', 'F', 'D' ou 'I', pour afficher Hello world dans la langue d votre choix.");
 	}
 
 	/**
@@ -69,32 +65,29 @@ public class Controller implements IController {
      * @param tilemap TileMap in text format (with letter)
      * @see contract.IController#parser(String)
      */
-    public String[][] parser(String tilemap) {
+    public IElement[][] parser(String tilemap) {
         String[] lines = tilemap.split("\n");
         int x = lines.length;
         int y = lines[0].length();
-        String[][] map = new String[x][y];
+        IElement[][] map = new IElement[x][y];
 
-        for(String[] row: map)
-            Arrays.fill(row, "");
+        Hashtable<Character, IElement> assocSprite = this.model.getAssocSprite();
 
-        Hashtable<Character, String> assocSprite = this.view.getAssocSprite();
+        for(IElement[] row: map)
+            Arrays.fill(row, assocSprite.get(' '));
+
 
         for(int i = 0; i < x; i++)
         {
             for(int j = 0; j < y; j++)
             {
                 char c = lines[i].charAt(j);
-                System.out.printf("FUCK : '%s'%n", c);
-                String sprite = assocSprite.get(c);
-                System.out.printf("DICK : '%s'%n", sprite);
-                if (sprite != null) {
-                    map[i][j] = sprite;
+                IElement ele = assocSprite.get(c);
+                if (ele != null) {
+                    map[i][j] = ele;
                 }
             }
         }
-
-        System.out.println(Arrays.deepToString(map));
 
         return map;
 	}
@@ -133,14 +126,6 @@ public class Controller implements IController {
             case MAP9:
                 this.model.loadMap("MAP9");
                 break;
-			case MOVEUP:
-				this.model.moveUp();
-			case MOVEDOWN:
-				this.model.moveDown();
-			case MOVELEFT:
-				this.model.moveLeft();
-			case MOVERIGHT:
-				this.model.moveRight();
 			default:
                 this.model.loadMap("TEST");
 				break;

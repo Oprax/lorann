@@ -1,5 +1,7 @@
 package view;
 
+import contract.IElement;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,7 +25,7 @@ class ViewPanel extends JPanel implements Observer {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -998294702363713521L;
 
-    private String[][] tileMap;
+    private IElement[][] tileMap;
 
 	/**
 	 * Instantiates a new view panel.
@@ -91,21 +93,13 @@ class ViewPanel extends JPanel implements Observer {
 
         if(this.tileMap != null)
         {
-            for (int i = 0; i < this.tileMap[0].length; i++)
+            for (int i = 0; i < this.tileMap.length; i++)
             {
-                for(int j = 0; j < this.tileMap.length; j++)
+                for(int j = 0; j < this.tileMap[0].length; j++)
                 {
-                    if(!this.tileMap[j][i].equals(""))
-                    {
-                        BufferedImage image = null;
-                        try {
-                            image = ImageIO.read(new File(
-                                    String.format("sprite\\%s", this.tileMap[j][i])));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        graphics.drawImage(image, i*32, j*32, null);
-                    }
+                    BufferedImage image = tileMap[i][j].getImage();
+                    if(image != null)
+                        graphics.drawImage(image, j*32, i*32, null);
                 }
             }
         }

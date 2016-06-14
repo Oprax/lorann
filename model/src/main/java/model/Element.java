@@ -1,29 +1,41 @@
 package model;
 
+import contract.IElement;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Yog on 13/06/2016.
  */
-public abstract class Element {
+public abstract class Element implements IElement {
     private int         x;
     private int         y;
-    private Image       image = null;
-    private ImageIcon   imageIcon = null;
+    private BufferedImage image = null;
     private boolean     permeability;
 
-    public Element(String path, final boolean permeability)
+    public Element(String path, boolean permeability)
     {
         if (path == null) {
             System.out.println("/!\\ERROR/!\\SPRITE PATH FOR " + x + y + " IMAGE IS NULL/!\\ERROR/!\\");
         }
-        this.imageIcon = new ImageIcon(path);
-        this.image = this.imageIcon.getImage();
+        if(!path.equals("")) {
+            try {
+                this.image = ImageIO.read(new File(
+                        String.format("sprite\\%s", path)));
+            } catch (IOException e) {
+                System.out.println(String.format("sprite\\%s", path));
+                e.printStackTrace();
+            }
+        }
         this.permeability = permeability;
     }
 
-    public Image getImage()
+    public BufferedImage getImage()
     {
         return this.image;
     }

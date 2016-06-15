@@ -189,67 +189,22 @@ public class Controller implements IController, Observer {
 		}
 	}
 
-    public void fire() {
+    private void fire() {
         this.destroyFireBall();
         MobileOrder direction = this.hero.getDirection();
-        Point pos = this.hero.getPos().getLocation();
-        boolean fireball = true;
-        switch (direction) {
-            case Left:
-                if(pos.y > 0 &&
-                        tileMap[pos.x][pos.y - 1].getPermeability())
-                {
-                    pos.setLocation(new Point(
-                            pos.x,
-                            pos.y - 1));
-                } else {
-                    fireball = false;
-                }
-                break;
-            case Right:
-                if(pos.y < view.getWidth() / 32 - 1 &&
-                        tileMap[pos.x][pos.y + 1].getPermeability())
-                {
-                    pos.setLocation(new Point(
-                            pos.x,
-                            pos.y + 1));
-                } else {
-                    fireball = false;
-                }
-                break;
-            case Up:
-                if(pos.x > 0 &&
-                        tileMap[pos.x - 1][pos.y].getPermeability()) {
-                    pos.setLocation(new Point(
-                            pos.x - 1,
-                            pos.y));
-                } else {
-                    fireball = false;
-                }
-                break;
-            case Down:
-                if(pos.x < view.getHeight() / 32 - 1 &&
-                        tileMap[pos.x + 1][pos.y].getPermeability()) {
-                    pos.setLocation(new Point(
-                            pos.x + 1,
-                            pos.y));
-                } else {
-                    fireball = false;
-                }
-                break;
-        }
-
-        if(fireball) {
-            this.fireBall = (IFireball) this.model.element('F', pos);
+        Point currentPos = this.hero.getPos().getLocation();
+        Point nextPos = this.computeNextPos(direction, currentPos);
+        if(!currentPos.equals(nextPos)) {
+            this.fireBall = (IFireball) this.model.element('F', nextPos);
             this.fireBall.setDirection(direction);
-            this.swapFireBall();
+            this.swapFireBall(nextPos);
             this.view.repaint();
         }
     }
         /** Function checking if the hero is moving out of the map,
          * then checking if it collides with an object which permeability is false,
          * then applies the changes of position if the hero can move */
-    public void moveHero(MobileOrder order) {
+    private void moveHero(MobileOrder order) {
         Point pos = this.hero.getPos();
         this.hero.move(order, tileMap, this.view);
         this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
@@ -259,68 +214,81 @@ public class Controller implements IController, Observer {
         this.view.repaint();
     }
 
-    public void moveFireBall() {
-        Point pos = this.fireBall.getPos().getLocation();
+    private void moveFireBall() {
+        Point currentPos = this.fireBall.getPos().getLocation();
         this.fireBall.animate();
-        System.out.printf("DICK '%s'%n", pos);
-        switch (this.fireBall.getDirection()) {
-            case Left:
-                if(pos.y > 0 &&
-                        tileMap[pos.x][pos.y - 1].getPermeability())
-                {
-                    this.fireBall.setLocation(new Point(
-                            pos.x,
-                            pos.y - 1));
-                }
-                break;
-            case Right:
-                if(pos.y < view.getWidth() / 32 - 1 &&
-                        tileMap[pos.x][pos.y + 1].getPermeability())
-                {
-                    this.fireBall.setLocation(new Point(
-                            pos.x,
-                            pos.y + 1));
-                }
-                break;
-            case Up:
-                if(pos.x > 0 &&
-                        tileMap[pos.x - 1][pos.y].getPermeability()) {
-                    this.fireBall.setLocation(new Point(
-                            pos.x - 1,
-                            pos.y));
-                }
-                break;
-            case Down:
-                if(pos.x < view.getHeight() / 32 - 1 &&
-                        tileMap[pos.x + 1][pos.y].getPermeability()) {
-                    this.fireBall.setLocation(new Point(
-                            pos.x + 1,
-                            pos.y));
-                }
-                break;
-        }
-        System.out.printf("BUTT '%s'%n", pos);
+        System.out.printf("DICK '%s'%n", currentPos);
+        Point nextPos = this.computeNextPos(this.fireBall.getDirection(), currentPos);
+        System.out.printf("BUTT '%s'%n", currentPos);
 
-        this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
+        this.swapFireBall(nextPos);
 
-        this.swapFireBall();
+        this.tileMap[currentPos.x][currentPos.y] = model.element(' ', currentPos.getLocation());
 
         if(this.fireBall != null && this.fireBall.getStep() > 5) {
             this.destroyFireBall();
         }
     }
 
-    public void swapFireBall() {
-        Point pos = this.fireBall.getPos();
-        String elementName = this.tileMap[pos.x][pos.y].getClass().getCanonicalName();
-        if(elementName.contains("Monster")) {
+    private void swapFireBall(Point nextPos) {
+        String nextElement = this.tileMap[nextPos.x][nextPos.y].getClass().getCanonicalName();
+        if(nextElement.contains("Monster")) {
+            this.fireBall.setLocation(nextPos);
+            this.tileMap[nextPos.x][nextPos.y] = this.fireBall;
             this.destroyFireBall();
-        } else {
-            this.tileMap[pos.x][pos.y] = this.fireBall;
+        } else if(nextElement.contains("Door") ||
+                nextElement.contains("Purse") ||
+                nextElement.contains("Crystal")) {
+            this.fireBall = null;
+        }
+        else {
+            this.fireBall.setLocation(nextPos);
+            this.tileMap[nextPos.x][nextPos.y] = this.fireBall;
         }
     }
 
-    public void destroyFireBall() {
+    private Point computeNextPos(MobileOrder direction, Point currentPos) {
+        Point nextPos = currentPos.getLocation();
+        switch (direction) {
+            case Left:
+                if(currentPos.y > 0 &&
+                        tileMap[currentPos.x][currentPos.y - 1].getPermeability())
+                {
+                    nextPos = new Point(
+                            currentPos.x,
+                            currentPos.y - 1);
+                }
+                break;
+            case Right:
+                if(currentPos.y < (view.getWidth() / 32) - 1 &&
+                        tileMap[currentPos.x][currentPos.y + 1].getPermeability())
+                {
+                    nextPos = new Point(
+                            currentPos.x,
+                            currentPos.y + 1);
+                }
+                break;
+            case Up:
+                if(currentPos.x > 0 &&
+                        tileMap[currentPos.x - 1][currentPos.y].getPermeability()) {
+                    nextPos = new Point(
+                            currentPos.x - 1,
+                            currentPos.y);
+                }
+                break;
+            case Down:
+                if(currentPos.x < (view.getHeight() / 32) - 1 &&
+                        tileMap[currentPos.x + 1][currentPos.y].getPermeability()) {
+                    nextPos = new Point(
+                            currentPos.x + 1,
+                            currentPos.y);
+                }
+                break;
+        }
+        return nextPos;
+    }
+
+    private void destroyFireBall() {
         if(this.fireBall != null) {
             Point pos = this.fireBall.getPos().getLocation();
             this.tileMap[pos.x][pos.y] = this.model.element(' ', pos);

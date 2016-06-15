@@ -142,6 +142,12 @@ public class Controller implements IController, Observer {
             case MAP9:
                 this.model.loadMap("MAP9");
                 break;
+            case MENU:
+                this.model.loadMap("MENU");
+                break;
+            case WORKSHOP:
+                this.model.loadMap("WORKSHOP");
+                break;
             case MOVEDOWN:
                 this.movehero(MobileOrder.Down);
                 break;

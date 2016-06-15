@@ -162,12 +162,10 @@ public class Controller implements IController, Observer {
 
     public void movehero(MobileOrder order) {
         Point pos = this.hero.getPos();
-        System.out.println("DEBUG HEIGHT-----" + view.getHeight());
-        System.out.println("DEBUG WIDTH-----" + view.getWidth());
-        if ((order == MobileOrder.Up && this.hero.getPos().getX() > 0) ||
-                (order == MobileOrder.Down && this.hero.getPos().getX() < view.getHeight() / 32 - 2) ||
-                (order == MobileOrder.Left && this.hero.getPos().getY() > 0) ||
-                (order == MobileOrder.Right && this.hero.getPos().getY() < view.getWidth() / 32 - 1)) {
+        if ((order == MobileOrder.Up && this.hero.getPos().getX() > 0 && getTileMap()[(int)this.hero.getPos().getX() - 1][(int)this.hero.getPos().getY()].getPermeability()) ||
+                (order == MobileOrder.Down && this.hero.getPos().getX() < view.getHeight() / 32 - 1 && getTileMap()[(int)this.hero.getPos().getX() + 1][(int)this.hero.getPos().getY()].getPermeability()) ||
+                (order == MobileOrder.Left && this.hero.getPos().getY() > 0 && getTileMap()[(int)this.hero.getPos().getX()][(int)this.hero.getPos().getY() - 1].getPermeability()) ||
+                (order == MobileOrder.Right && this.hero.getPos().getY() < view.getWidth() / 32 - 1 && getTileMap()[(int)this.hero.getPos().getX()][(int)this.hero.getPos().getY() + 1].getPermeability())) {
             this.hero.move(order);
             this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
 

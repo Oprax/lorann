@@ -113,7 +113,7 @@ INSERT INTO `map` (`id`, `map_name`, `map`) VALUES
   (9, 'MAP9', 'BHHBHHHBHHHHHBHHBHHB\nV  B         V  B LV\nBHB          B     V\nV  BHHHHHHHBB      V\nV          B     BVB\nV  B     C         V\nBHB    B      B    V\nV2 B B  BHB BHBBBHHB\nV  V  B    B3  B   V\nV  V1 V  K V   V   V\nV  V  V4   V   V   V\nBHHBHHBHHHHBHHHBHHHB'),
   (10, 'TEST', 'BVHPL\n1234 \nCO   '),
   (17, 'MENU', 'BHHHHHHHHHHHHHHHHHHB\nV         L        V\nV  BHBHHHHHHHHBHB  V\nV    V        V    V\nBHHB V        V BHHB\nB  B V        V B  B\nBB   V        V   BB\nBBHHHB        BHHHBB\nV    V        V    V\nBHHHHBHHHHHHHHBHHHHB\nV         1        V\nBHHHHHHHHHHHHHHHHHHB'),
-  (18, 'WORKSHOP', 'BHHHHHHHHHHHHHHHHHHB\nV                  V\nV                  V\nV                  V\nO                  V\nV        L         V\nV                  V\nV                  V\nV                  V\nV                  V\nV                  V\nBHHHHHHHHHHHHHHHHHHB');
+  (18, 'WORKSHOP', 'BHHHHHHHHHHHHHHHHHHB\nV                  V\nV        L         V\nV                  V\nO                  V\nV        L         V\nV                  V\nV                  V\nV                  V\nV                  V\nV                  V\nBHHHHHHHHHHHHHHHHHHB');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

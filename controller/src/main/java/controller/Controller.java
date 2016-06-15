@@ -48,7 +48,12 @@ public class Controller implements IController, Observer {
 	 * @see contract.IController#start()
 	 */
 	public void start() {
-        this.orderPerform(ControllerOrder.TEST);
+        this.orderPerform(ControllerOrder.MENU);
+
+        // Game Loop
+        while (true) {
+            this.view.repaint();
+        }
 	}
 
 	/**
@@ -160,11 +165,17 @@ public class Controller implements IController, Observer {
             case MOVELEFT:
                 this.movehero(MobileOrder.Left);
                 break;
+            case FIRE:
+                this.fire();
 			default:
                 this.model.loadMap("TEST");
 				break;
 		}
 	}
+
+    public void fire() {
+        //IMobile fire =
+    }
         /** Function checking if the hero is moving out of the map,
          * then checking if it collides with an object which permeability is false,
          * then applies the changes of position if the hero can move */

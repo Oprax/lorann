@@ -22,5 +22,6 @@ public enum ControllerOrder {
 	MAP9,
 	TEST,
 	MENU,
-	WORKSHOP
+	WORKSHOP,
+    FIRE
 }

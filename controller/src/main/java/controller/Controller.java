@@ -22,6 +22,8 @@ public class Controller implements IController, Observer {
 
     private IHero hero;
 
+    private IFireball fireBall;
+
     public IElement[][] getTileMap() {
         return tileMap;
     }
@@ -53,6 +55,17 @@ public class Controller implements IController, Observer {
         // Game Loop
         while (true) {
             this.view.repaint();
+            if(this.fireBall != null) {
+                this.moveFireBall();
+            }
+
+            try {
+                Thread.sleep(250);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            this.view.repaint();
+
         }
 	}
 
@@ -100,12 +113,12 @@ public class Controller implements IController, Observer {
                 char c = lines[i].charAt(j);
 				Point pos = new Point(i, j);
 
-                IElement ele = this.model.element(c, pos);
+                IElement element = this.model.element(c, pos);
                 if(c == 'L') {
-                    this.hero = (IHero) ele;
+                    this.hero = (IHero) element;
                 }
-                if (ele != null) {
-                    map[i][j] = ele;
+                if (element != null) {
+                    map[i][j] = element;
                 }
             }
         }
@@ -154,19 +167,20 @@ public class Controller implements IController, Observer {
                 this.model.loadMap("WORKSHOP");
                 break;
             case MOVEDOWN:
-                this.movehero(MobileOrder.Down);
+                this.moveHero(MobileOrder.Down);
                 break;
             case MOVEUP:
-                this.movehero(MobileOrder.Up);
+                this.moveHero(MobileOrder.Up);
                 break;
             case MOVERIGHT:
-                this.movehero(MobileOrder.Right);
+                this.moveHero(MobileOrder.Right);
                 break;
             case MOVELEFT:
-                this.movehero(MobileOrder.Left);
+                this.moveHero(MobileOrder.Left);
                 break;
             case FIRE:
                 this.fire();
+                break;
 			default:
                 this.model.loadMap("TEST");
 				break;
@@ -174,12 +188,38 @@ public class Controller implements IController, Observer {
 	}
 
     public void fire() {
-        //IMobile fire =
+        this.destroyFireBall();
+        MobileOrder direction = this.hero.getDirection();
+        Point pos = this.hero.getPos().getLocation();
+        switch (direction) {
+            case Left:
+                pos.setLocation(
+                        pos.getX(),
+                        pos.getY() - 1);
+                break;
+            case Right:
+                pos.setLocation(
+                        pos.getX(),
+                        pos.getY() + 1);
+                break;
+            case Up:
+                pos.setLocation(
+                        pos.getX() - 1,
+                        pos.getY());
+                break;
+            case Down:
+                pos.setLocation(
+                        pos.getX() + 1,
+                        pos.getY());
+                break;
+        }
+        this.fireBall = (IFireball) this.model.element('F', pos);
+        this.fireBall.setDirection(direction);
     }
         /** Function checking if the hero is moving out of the map,
          * then checking if it collides with an object which permeability is false,
          * then applies the changes of position if the hero can move */
-    public void movehero(MobileOrder order) {
+    public void moveHero(MobileOrder order) {
         Point pos = this.hero.getPos();
         this.hero.move(order, tileMap, this.view);
         this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
@@ -187,6 +227,64 @@ public class Controller implements IController, Observer {
         pos = this.hero.getPos();
         this.tileMap[pos.x][pos.y] = this.hero;
         this.view.repaint();
+    }
+
+    public void moveFireBall() {
+        Point pos = this.fireBall.getPos().getLocation();
+        System.out.println(this.fireBall.getDirection());
+        this.fireBall.animate();
+        switch (this.fireBall.getDirection()) {
+            case Left:
+                if(pos.y > 0 &&
+                        tileMap[pos.x][pos.y - 1].getPermeability())
+                {
+                    this.fireBall.setLocation(new Point(
+                            pos.x,
+                            pos.y - 1));
+                }
+                break;
+            case Right:
+                if(pos.y < view.getWidth() / 32 - 1 &&
+                        tileMap[pos.x][pos.y + 1].getPermeability())
+                {
+                    this.fireBall.setLocation(new Point(
+                            pos.x,
+                            pos.y + 1));
+                }
+                break;
+            case Up:
+                if(pos.x > 0 &&
+                        tileMap[pos.x - 1][pos.y].getPermeability()) {
+                    this.fireBall.setLocation(new Point(
+                            pos.x - 1,
+                            pos.y));
+                }
+                break;
+            case Down:
+                if(pos.x < view.getHeight() / 32 - 1 &&
+                        tileMap[pos.x + 1][pos.y].getPermeability()) {
+                    this.fireBall.setLocation(new Point(
+                            pos.x + 1,
+                            pos.y));
+                }
+                break;
+        }
+
+        this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
+        pos = this.fireBall.getPos();
+        this.tileMap[pos.x][pos.y] = this.fireBall;
+
+        if(this.fireBall.getStep() > 5) {
+            this.destroyFireBall();
+        }
+    }
+
+    public void destroyFireBall() {
+        if(this.fireBall != null) {
+            Point pos = this.fireBall.getPos().getLocation();
+            this.tileMap[pos.x][pos.y] = this.model.element(' ', pos);
+            this.fireBall = null;
+        }
     }
 
     public void update(Observable o, Object arg) {

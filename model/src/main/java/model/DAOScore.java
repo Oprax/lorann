@@ -40,16 +40,30 @@ public class DAOScore extends DAOEntity<Score>{
         return null;
     }
 
-    public void scoreable() {
+    public void setscoreBDD() {
             Score score = new Score();
 
             try {
                 final String setScoreBDD = "{call UpdateScore}";
-                final CallableStatement call = this.getConnection().prepareCall(setScoreBDD);
+                final CallableStatement call = this.getConnection().prepareCall(setscoreBDD());
                 call.execute();
                 final ResultSet resultSet = call.getResultSet();
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
         }
+
+
+    public void setlastscore() {
+            Score LastScore = new
+        try {
+            final String updateLastScore = "{call UpdateLastScore}";
+            final CallableStatement call = this.getConnection().prepareCall(setlastscore());
+            call.execute();
+            final ResultSet resultSet = call.getResultSet();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

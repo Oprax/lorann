@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  */
 public abstract class Mobile extends Element implements IMobile {
     public Point getPos() {
-        return pos;
+        return pos.getLocation();
     }
 
     private Point pos = new Point();
@@ -31,23 +31,23 @@ public abstract class Mobile extends Element implements IMobile {
         switch (order) {
             case Left:
                 this.pos.setLocation(
-                        this.pos.getX() - 1,
-                        this.pos.getY());
-                break;
-            case Right:
-                this.pos.setLocation(
-                        this.pos.getX() + 1,
-                        this.pos.getY());
-                break;
-            case Up:
-                this.pos.setLocation(
                         this.pos.getX(),
                         this.pos.getY() - 1);
                 break;
-            case Down:
+            case Right:
                 this.pos.setLocation(
                         this.pos.getX(),
                         this.pos.getY() + 1);
+                break;
+            case Up:
+                this.pos.setLocation(
+                        this.pos.getX() - 1,
+                        this.pos.getY());
+                break;
+            case Down:
+                this.pos.setLocation(
+                        this.pos.getX() + 1,
+                        this.pos.getY());
                 break;
         }
         System.out.println("BUTT : " + pos);

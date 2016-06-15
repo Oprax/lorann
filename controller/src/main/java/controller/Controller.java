@@ -143,22 +143,32 @@ public class Controller implements IController, Observer {
                 this.model.loadMap("MAP9");
                 break;
             case MOVEDOWN:
-                this.hero.move(MobileOrder.Down);
+                this.movehero(MobileOrder.Down);
                 break;
             case MOVEUP:
-                this.hero.move(MobileOrder.Up);
+                this.movehero(MobileOrder.Up);
                 break;
             case MOVERIGHT:
-                this.hero.move(MobileOrder.Right);
+                this.movehero(MobileOrder.Right);
                 break;
             case MOVELEFT:
-                this.hero.move(MobileOrder.Left);
+                this.movehero(MobileOrder.Left);
                 break;
 			default:
                 this.model.loadMap("TEST");
 				break;
 		}
 	}
+
+    public void movehero(MobileOrder order) {
+        Point pos = this.hero.getPos();
+        this.hero.move(order);
+        this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
+
+        pos = this.hero.getPos();
+        this.tileMap[pos.x][pos.y] = this.hero;
+        this.view.repaint();
+    }
 
     public void update(Observable o, Object arg) {
         this.tileMap = parser(model.getMap());

@@ -159,7 +159,9 @@ public class Controller implements IController, Observer {
 				break;
 		}
 	}
-
+        /** Function checking if the hero is moving out of the map,
+         * then checking if it collides with an object which permeability is false,
+         * then applies the changes of position if the hero can move */
     public void movehero(MobileOrder order) {
         Point pos = this.hero.getPos();
         if ((order == MobileOrder.Up && this.hero.getPos().getX() > 0 && getTileMap()[(int)this.hero.getPos().getX() - 1][(int)this.hero.getPos().getY()].getPermeability()) ||

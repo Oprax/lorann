@@ -10,4 +10,8 @@ public interface IView {
 	void setController(IController controller);
 
 	void repaint();
+
+	int getHeight();
+
+	int getWidth();
 }

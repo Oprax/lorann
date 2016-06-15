@@ -162,11 +162,18 @@ public class Controller implements IController, Observer {
 
     public void movehero(MobileOrder order) {
         Point pos = this.hero.getPos();
-        this.hero.move(order);
-        this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
+        System.out.println("DEBUG HEIGHT-----" + view.getHeight());
+        System.out.println("DEBUG WIDTH-----" + view.getWidth());
+        if ((order == MobileOrder.Up && this.hero.getPos().getX() > 0) ||
+                (order == MobileOrder.Down && this.hero.getPos().getX() < view.getHeight() / 32 - 2) ||
+                (order == MobileOrder.Left && this.hero.getPos().getY() > 0) ||
+                (order == MobileOrder.Right && this.hero.getPos().getY() < view.getWidth() / 32 - 1)) {
+            this.hero.move(order);
+            this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
 
-        pos = this.hero.getPos();
-        this.tileMap[pos.x][pos.y] = this.hero;
+            pos = this.hero.getPos();
+            this.tileMap[pos.x][pos.y] = this.hero;
+        }
         this.view.repaint();
     }
 

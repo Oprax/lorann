@@ -31,6 +31,16 @@ public class View implements IView, Runnable {
 		SwingUtilities.invokeLater(this);
 	}
 
+	public int getHeight()
+	{
+		return this.viewFrame.getHeight();
+	}
+
+	public int getWidth()
+	{
+		return this.viewFrame.getWidth();
+	}
+
     /**
 	 * CrystalBall code to controller order.
 	 *

@@ -9,6 +9,7 @@ public class Score extends Entity {
     private int LastScore;
     private int Score;
 
+
     public int getScore_id() {
         return score_id;
     }
@@ -33,20 +34,5 @@ public class Score extends Entity {
 
     public void setLastScore(int lastScore) {
         LastScore = lastScore;
-    }
-
-
-
-
-
-
-    public Score() {
-        this();
-    }
-
-    public Score(int score_id, int LastScore, int Score) {
-        this.score_id = score_id;
-        lastScore = LastScore;
-        score = Score;
     }
 }

@@ -8,17 +8,7 @@ import java.sql.SQLException;
 /**
  * Created by Dorian on 15/06/2016.
  */
-public class DAOScore extends DAOEntity{
-
-
-    /**
-     * Instantiates a new DAO entity.
-     *
-     * @throws SQLException the SQL exception
-     */
-    public DAOScore() throws SQLException {
-        super(connection())
-    }
+public class DAOScore extends DAOEntity<Score>{
 
     /**
      * Instantiates a new DAO entity.
@@ -30,41 +20,36 @@ public class DAOScore extends DAOEntity{
         super(connection);
     }
 
-    public boolean create(Entity entity) {
+    public boolean create(Score entity) {
         return false;
     }
 
-    public boolean delete(Entity entity) {
+    public boolean delete(Score entity) {
         return false;
     }
 
-    public boolean update(Entity entity) {
+    public boolean update(Score entity) {
         return false;
     }
 
-    public Entity find(int id) {
+    public Entity find(int score_id) {
         return null;
     }
 
-    public Entity find(String key) {
+    public Score find(String key) {
         return null;
     }
 
-    public Scoreable scoreable() {
-            Score updatescore = new Score();
+    public void scoreable() {
+            Score score = new Score();
 
             try {
                 final String setScoreBDD = "{call UpdateScore}";
                 final CallableStatement call = this.getConnection().prepareCall(setScoreBDD);
                 call.execute();
                 final ResultSet resultSet = call.getResultSet();
-                if (resultSet.first()) {
-                    Score = new Score(score_id, resultSet.getString("LastScore"), resultSet.getString("Score"));
-                }
-                return score;
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
-            return null;
-        }    }
+        }
 }

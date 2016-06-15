@@ -67,11 +67,11 @@ abstract class DAOEntity<E extends Entity> {
 	/**
 	 * Find.
 	 *
-	 * @param id
+	 * @param score_id
 	 *          the id
 	 * @return the e
 	 */
-	public abstract E find(int id);
+	public abstract Entity find(int score_id);
 
 	/**
 	 * Find.

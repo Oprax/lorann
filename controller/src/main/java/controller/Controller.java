@@ -54,18 +54,17 @@ public class Controller implements IController, Observer {
 
         // Game Loop
         while (true) {
-            this.view.repaint();
             if(this.fireBall != null) {
                 this.moveFireBall();
             }
+
+            this.view.repaint();
 
             try {
                 Thread.sleep(250);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            this.view.repaint();
-
         }
 	}
 
@@ -132,6 +131,9 @@ public class Controller implements IController, Observer {
 	 * @see contract.IController#orderPerform(contract.ControllerOrder)
 	 */
 	public void orderPerform(final ControllerOrder controllerOrder) {
+        if (controllerOrder == null)
+            return;
+
 		switch (controllerOrder) {
             case MAP1:
 				this.model.loadMap("MAP1");
@@ -191,30 +193,58 @@ public class Controller implements IController, Observer {
         this.destroyFireBall();
         MobileOrder direction = this.hero.getDirection();
         Point pos = this.hero.getPos().getLocation();
+        boolean fireball = true;
         switch (direction) {
             case Left:
-                pos.setLocation(
-                        pos.getX(),
-                        pos.getY() - 1);
+                if(pos.y > 0 &&
+                        tileMap[pos.x][pos.y - 1].getPermeability())
+                {
+                    pos.setLocation(new Point(
+                            pos.x,
+                            pos.y - 1));
+                } else {
+                    fireball = false;
+                }
                 break;
             case Right:
-                pos.setLocation(
-                        pos.getX(),
-                        pos.getY() + 1);
+                if(pos.y < view.getWidth() / 32 - 1 &&
+                        tileMap[pos.x][pos.y + 1].getPermeability())
+                {
+                    pos.setLocation(new Point(
+                            pos.x,
+                            pos.y + 1));
+                } else {
+                    fireball = false;
+                }
                 break;
             case Up:
-                pos.setLocation(
-                        pos.getX() - 1,
-                        pos.getY());
+                if(pos.x > 0 &&
+                        tileMap[pos.x - 1][pos.y].getPermeability()) {
+                    pos.setLocation(new Point(
+                            pos.x - 1,
+                            pos.y));
+                } else {
+                    fireball = false;
+                }
                 break;
             case Down:
-                pos.setLocation(
-                        pos.getX() + 1,
-                        pos.getY());
+                if(pos.x < view.getHeight() / 32 - 1 &&
+                        tileMap[pos.x + 1][pos.y].getPermeability()) {
+                    pos.setLocation(new Point(
+                            pos.x + 1,
+                            pos.y));
+                } else {
+                    fireball = false;
+                }
                 break;
         }
-        this.fireBall = (IFireball) this.model.element('F', pos);
-        this.fireBall.setDirection(direction);
+
+        if(fireball) {
+            this.fireBall = (IFireball) this.model.element('F', pos);
+            this.fireBall.setDirection(direction);
+            this.swapFireBall();
+            this.view.repaint();
+        }
     }
         /** Function checking if the hero is moving out of the map,
          * then checking if it collides with an object which permeability is false,
@@ -231,8 +261,8 @@ public class Controller implements IController, Observer {
 
     public void moveFireBall() {
         Point pos = this.fireBall.getPos().getLocation();
-        System.out.println(this.fireBall.getDirection());
         this.fireBall.animate();
+        System.out.printf("DICK '%s'%n", pos);
         switch (this.fireBall.getDirection()) {
             case Left:
                 if(pos.y > 0 &&
@@ -269,13 +299,24 @@ public class Controller implements IController, Observer {
                 }
                 break;
         }
+        System.out.printf("BUTT '%s'%n", pos);
 
         this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
-        pos = this.fireBall.getPos();
-        this.tileMap[pos.x][pos.y] = this.fireBall;
 
-        if(this.fireBall.getStep() > 5) {
+        this.swapFireBall();
+
+        if(this.fireBall != null && this.fireBall.getStep() > 5) {
             this.destroyFireBall();
+        }
+    }
+
+    public void swapFireBall() {
+        Point pos = this.fireBall.getPos();
+        String elementName = this.tileMap[pos.x][pos.y].getClass().getCanonicalName();
+        if(elementName.contains("Monster")) {
+            this.destroyFireBall();
+        } else {
+            this.tileMap[pos.x][pos.y] = this.fireBall;
         }
     }
 

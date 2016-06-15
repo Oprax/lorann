@@ -21,55 +21,42 @@ public abstract class Mobile extends Element implements IMobile {
 
     protected Point pos = new Point();
 
-    protected MobileOrder direction;
+    protected MobileOrder direction = MobileOrder.Down;
 
     public Mobile(String imagePath, boolean permeability, Point pos) {
         super(imagePath, permeability);
         this.pos.setLocation(pos);
     }
 
+    public MobileOrder getDirection() {
+        return direction;
+    }
+
     public void move(MobileOrder order)
     {
-        System.out.println("DICK : " + pos);
         switch (order) {
             case Left:
-                if(this.direction == MobileOrder.Left) {
-                    this.pos.setLocation(
-                            this.pos.getX(),
-                            this.pos.getY() - 1);
-                } else {
-                    this.loadSprite("sprite\\lorann_l.png");
-                }
+                this.pos.setLocation(
+                        this.pos.getX(),
+                        this.pos.getY() - 1);
                 break;
             case Right:
-                if(this.direction == MobileOrder.Right) {
-                    this.pos.setLocation(
-                            this.pos.getX(),
-                            this.pos.getY() + 1);
-                } else {
-                    this.loadSprite("sprite\\lorann_r.png");
-                }
+                this.pos.setLocation(
+                        this.pos.getX(),
+                        this.pos.getY() + 1);
                 break;
             case Up:
-                if(this.direction == MobileOrder.Up) {
-                    this.pos.setLocation(
-                            this.pos.getX() - 1,
-                            this.pos.getY());
-                } else {
-                    this.loadSprite("sprite\\lorann_u.png");
-                }
+                this.pos.setLocation(
+                        this.pos.getX() - 1,
+                        this.pos.getY());
                 break;
             case Down:
-                if(this.direction == MobileOrder.Down) {
-                    this.pos.setLocation(
-                            this.pos.getX() + 1,
-                            this.pos.getY());
-                } else {
-                    this.loadSprite("sprite\\lorann_b.png");
-                }
+                this.pos.setLocation(
+                        this.pos.getX() + 1,
+                        this.pos.getY());
                 break;
         }
         this.direction = order;
-        System.out.println("BUTT : " + pos);
+        System.out.println("POS : " + pos);
     }
 }

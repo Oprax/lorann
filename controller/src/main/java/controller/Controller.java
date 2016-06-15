@@ -20,6 +20,8 @@ public class Controller implements IController, Observer {
 	/** The model. */
 	private IModel model;
 
+    private IMobile hero;
+
     public IElement[][] getTileMap() {
         return tileMap;
     }
@@ -36,6 +38,7 @@ public class Controller implements IController, Observer {
 		this.setView(view);
 		this.setModel(model);
         this.tileMap = this.parser(this.model.getMap());
+        this.hero = (IMobile) model.element('L', new Point());
         model.getObservable().addObserver(this);
 	}
 
@@ -91,7 +94,11 @@ public class Controller implements IController, Observer {
             {
                 char c = lines[i].charAt(j);
 				Point pos = new Point(i, j);
+
                 IElement ele = this.model.element(c, pos);
+                if(c == 'L') {
+                    this.hero = (IMobile) ele;
+                }
                 if (ele != null) {
                     map[i][j] = ele;
                 }
@@ -134,6 +141,18 @@ public class Controller implements IController, Observer {
                 break;
             case MAP9:
                 this.model.loadMap("MAP9");
+                break;
+            case MOVEDOWN:
+                this.hero.move(MobileOrder.Down);
+                break;
+            case MOVEUP:
+                this.hero.move(MobileOrder.Up);
+                break;
+            case MOVERIGHT:
+                this.hero.move(MobileOrder.Right);
+                break;
+            case MOVELEFT:
+                this.hero.move(MobileOrder.Left);
                 break;
 			default:
                 this.model.loadMap("TEST");

@@ -59,7 +59,7 @@ public class View implements IView, Runnable {
 			case KeyEvent.VK_NUMPAD9:
 				return ControllerOrder.MAP9;
 			case KeyEvent.VK_NUMPAD0:
-				return ControllerOrder.TEST;/*
+				return ControllerOrder.TEST;
 			case KeyEvent.VK_LEFT:
 				return ControllerOrder.MOVELEFT;
 			case KeyEvent.VK_RIGHT:
@@ -67,7 +67,7 @@ public class View implements IView, Runnable {
 			case KeyEvent.VK_DOWN:
 				return ControllerOrder.MOVEDOWN;
 			case KeyEvent.VK_UP:
-				return ControllerOrder.MOVEUP;*/
+				return ControllerOrder.MOVEUP;
 			default:
 				return null;
 		}

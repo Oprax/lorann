@@ -23,6 +23,9 @@ class ViewFrame extends JFrame implements KeyListener {
 
 	/** The controller. */
 	private IController controller;
+
+
+	private ViewPanel viewPanel;
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -697358409737458175L;
 
@@ -126,13 +129,20 @@ class ViewFrame extends JFrame implements KeyListener {
 	 *          the model
 	 */
 	private void buildViewFrame(final IModel model) {
+		this.viewPanel = new ViewPanel(this);
 		this.setModel(model);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.addKeyListener(this);
-		this.setContentPane(new ViewPanel(this));
+		this.setContentPane(this.viewPanel);
 		this.setSize(400, 60);
 		this.setLocationRelativeTo(null);
+	}
+
+	public void update() {
+		this.viewPanel.update(
+                this.controller.getTileMap()
+        );
 	}
 
     /**

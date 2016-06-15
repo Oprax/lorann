@@ -1,6 +1,7 @@
 package contract;
 
 
+import java.awt.*;
 import java.util.Hashtable;
 import java.util.Observable;
 
@@ -35,5 +36,5 @@ public interface IModel {
 	 */
 	void loadMap(String key);
 
-	Hashtable<Character, IElement> getAssocSprite();
+	IElement element(char c, Point pos);
 }

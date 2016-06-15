@@ -4,13 +4,7 @@ import contract.IElement;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -18,7 +12,7 @@ import javax.swing.JPanel;
  *
  * @author Jean-Aymeric Diet
  */
-class ViewPanel extends JPanel implements Observer {
+class ViewPanel extends JPanel {
 
 	/** The view frame. */
 	private ViewFrame viewFrame;
@@ -35,7 +29,6 @@ class ViewPanel extends JPanel implements Observer {
 	 */
 	public ViewPanel(final ViewFrame viewFrame) {
 		this.setViewFrame(viewFrame);
-		viewFrame.getModel().getObservable().addObserver(this);
 	}
 
 	/**
@@ -62,9 +55,8 @@ class ViewPanel extends JPanel implements Observer {
 	 *
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
-	public void update(final Observable arg0, final Object arg1) {
-        this.tileMap = this.viewFrame.getController().parser(
-                this.viewFrame.getModel().getMap());
+	public void update(IElement[][] tileMap) {
+        this.tileMap = tileMap;
 		this.setSize(this.tileMap[0].length, this.tileMap.length);
 		this.repaint();
 	}
@@ -93,6 +85,7 @@ class ViewPanel extends JPanel implements Observer {
 
         if(this.tileMap != null)
         {
+            System.out.println(Arrays.deepToString(this.tileMap));
             for (int i = 0; i < this.tileMap.length; i++)
             {
                 for(int j = 0; j < this.tileMap[0].length; j++)

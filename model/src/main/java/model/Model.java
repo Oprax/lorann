@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Observable;
@@ -14,57 +15,48 @@ import model.motionless.*;
  */
 public class Model extends Observable implements IModel {
 
-	/** The message. */
-	private String message;
-
 	/** The map */
-	private String map;
-
-	/** Array of every elements in the map */
-	public Element[][] elements;
-
-
-
-	/**
-	 * Return Hashtable<Character, String> of associate sprite
-	 * @return assocSprite
-	 */
-	public Hashtable<Character, IElement> getAssocSprite() {
-		return assocSprite;
-	}
-
-	/**
-	 * Array have letter in key and the sprite's name in value
-	 */
-	private Hashtable<Character, IElement> assocSprite = new Hashtable<Character, IElement>();
+	private String map = "";
 
 	/**
 	 * Instantiates a new model.
 	 */
 	public Model() {
-		this.fillAssoc();
-        this.map = "B V H P L\n" +
-				"1 2 3 4  \n" +
-				"C O      ";
+        this.loadMap("TEST");
 	}
 
 	/**
 	 * Associate all sprite with a letter representing hin in tileMap
 	 */
-	private void fillAssoc() {
-		this.assocSprite.put('B', new Bone());
-		this.assocSprite.put('K', new CrystalBall());
-		this.assocSprite.put('H', new HorizontalBone());
-		this.assocSprite.put('V', new VerticalBone());
-		this.assocSprite.put('C', new ClosedDoor());
-		this.assocSprite.put('O', new OpenDoor());
-		this.assocSprite.put('P', new Purse());
-		this.assocSprite.put('L', new Heroe());
-		this.assocSprite.put('1', new Monster1());
-		this.assocSprite.put('2', new Monster2());
-		this.assocSprite.put('3', new Monster3());
-		this.assocSprite.put('4', new Monster4());
-		this.assocSprite.put(' ', new Empty());
+	public IElement element(char c, Point pos) {
+		switch (c){
+			case 'B':
+				return new Bone();
+			case 'K':
+				return new CrystalBall();
+			case 'H':
+				return new HorizontalBone();
+			case 'V':
+				return new VerticalBone();
+			case 'C':
+				return new ClosedDoor();
+			case 'O':
+				return new OpenDoor();
+			case 'P':
+				return new Purse();
+			case 'L':
+				return new Hero(pos);
+			case '1':
+				return new Monster1(pos);
+			case '2':
+				return new Monster2(pos);
+			case '3':
+				return new Monster3(pos);
+			case '4':
+				return new Monster4(pos);
+			default:
+				return new Empty();
+		}
 	}
 
 	/*
@@ -82,11 +74,15 @@ public class Model extends Observable implements IModel {
 	public String getMap() {
 		return this.map;
 	}
+
+
 	private void setMap(final String map) {
 		this.map = map;
 		this.setChanged();
 		this.notifyObservers();
 	}
+
+
 	public void loadMap(String key) {
 		try {
 			final DAOLoadMap daoLoadMap = new DAOLoadMap(DBConnection.getInstance().getConnection());

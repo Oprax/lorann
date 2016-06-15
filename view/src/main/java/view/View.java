@@ -91,6 +91,10 @@ public class View implements IView, Runnable {
 		this.viewFrame.setVisible(true);
 	}
 
+	public void repaint(){
+		this.viewFrame.update();
+	}
+
 	/**
 	 * Sets the controller.
 	 *

@@ -2,21 +2,29 @@ package controller;
 
 import contract.*;
 
+import java.awt.*;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * The Class Controller.
  */
-public class Controller implements IController {
+public class Controller implements IController, Observer {
 
 	/** The view. */
 	private IView view;
 
+    private IElement[][] tileMap;
+
 	/** The model. */
 	private IModel model;
 
-	/**
+    public IElement[][] getTileMap() {
+        return tileMap;
+    }
+
+    /**
 	 * Instantiates a new controller.
 	 *
 	 * @param view
@@ -27,6 +35,8 @@ public class Controller implements IController {
 	public Controller(final IView view, final IModel model) {
 		this.setView(view);
 		this.setModel(model);
+        this.tileMap = this.parser(this.model.getMap());
+        model.getObservable().addObserver(this);
 	}
 
 	/**
@@ -71,10 +81,8 @@ public class Controller implements IController {
         int y = lines[0].length();
         IElement[][] map = new IElement[x][y];
 
-        Hashtable<Character, IElement> assocSprite = this.model.getAssocSprite();
-
         for(IElement[] row: map)
-            Arrays.fill(row, assocSprite.get(' '));
+            Arrays.fill(row, this.model.element(' ', null));
 
 
         for(int i = 0; i < x; i++)
@@ -82,7 +90,8 @@ public class Controller implements IController {
             for(int j = 0; j < y; j++)
             {
                 char c = lines[i].charAt(j);
-                IElement ele = assocSprite.get(c);
+				Point pos = new Point(i, j);
+                IElement ele = this.model.element(c, pos);
                 if (ele != null) {
                     map[i][j] = ele;
                 }
@@ -132,4 +141,8 @@ public class Controller implements IController {
 		}
 	}
 
+    public void update(Observable o, Object arg) {
+        this.tileMap = parser(model.getMap());
+        this.view.repaint();
+    }
 }

@@ -20,13 +20,24 @@ public class Controller implements IController, Observer {
 
     private IHero hero;
 
+    private int level = 1;
+
+    private int score = 0;
+
+    private Point posDoor = null;
+
     private HashMap<String, IMonster> monsters = new HashMap<String, IMonster>();
 
     private IFireball fireBall;
+
     private boolean dead = false;
 
     public IElement[][] getTileMap() {
         return tileMap;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     /**
@@ -126,6 +137,7 @@ public class Controller implements IController, Observer {
         IElement[][] map = new IElement[x][y];
 
         this.monsters.clear();
+        this.posDoor = null;
 
         for(IElement[] row: map)
             Arrays.fill(row, this.model.element(' ', null));
@@ -147,7 +159,9 @@ public class Controller implements IController, Observer {
                     IMonster monster = (IMonster) element;
                     this.monsters.put(monster.getClass().getSimpleName(), monster);
                 }
-
+                if(c == 'C') {
+                    this.posDoor = pos.getLocation();
+                }
                 if (element != null) {
                     map[i][j] = element;
                 }
@@ -169,30 +183,39 @@ public class Controller implements IController, Observer {
 		switch (controllerOrder) {
             case MAP1:
 				this.model.loadMap("MAP1");
+                this.level = 1;
 				break;
             case MAP2:
 				this.model.loadMap("MAP2");
+                this.level = 2;
 				break;
             case MAP3:
 				this.model.loadMap("MAP3");
+                this.level = 3;
 				break;
             case MAP4:
 				this.model.loadMap("MAP4");
+                this.level = 4;
 				break;
             case MAP5:
                 this.model.loadMap("MAP5");
+                this.level = 5;
                 break;
             case MAP6:
                 this.model.loadMap("MAP6");
+                this.level = 6;
                 break;
             case MAP7:
                 this.model.loadMap("MAP7");
+                this.level = 7;
                 break;
             case MAP8:
                 this.model.loadMap("MAP8");
+                this.level = 8;
                 break;
             case MAP9:
                 this.model.loadMap("MAP9");
+                this.level = 9;
                 break;
             case MENU:
                 this.model.loadMap("MENU");
@@ -244,9 +267,15 @@ public class Controller implements IController, Observer {
         this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
 
         pos = this.hero.getPos();
-        if(this.tileMap[pos.x][pos.y].getClass()
-                .getSimpleName().contains("Monster")) {
+        String elementName = this.tileMap[pos.x][pos.y].getClass().getSimpleName();
+        if(elementName.contains("Monster")) {
             this.dead = true;
+        } else if (elementName.contains("Crystal") && this.posDoor != null) {
+            this.tileMap[this.posDoor.x][this.posDoor.y] = model.element('O', this.posDoor);
+        } else if (elementName.contains("OpenDoor")) {
+            this.level++;
+            this.model.loadMap(String.format("MAP%d", this.level));
+            return;
         }
         this.tileMap[pos.x][pos.y] = this.hero;
         this.view.repaint();
@@ -315,6 +344,7 @@ public class Controller implements IController, Observer {
                 this.dead = true;
             } else if(!element.contains("Monster") &&
                     !element.contains("Purse") &&
+                    !element.contains("Crystal") &&
                     !element.contains("Door")) {
                 tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
                 monster.setLocation(nextPos);

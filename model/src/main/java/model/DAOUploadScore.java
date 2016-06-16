@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * @author Cyril SNIADACH
  */
-class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
+class DAOUploadScore extends DAOEntityScore<UploadScore> {
 
     /**
      * Instantiates a new DAO Load Map.
@@ -20,7 +20,7 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      * @throws SQLException
      *           the SQL exception
      */
-    public DAOGetHighscore(final Connection connection) throws SQLException {
+    public DAOUploadScore(final Connection connection) throws SQLException {
         super(connection);
     }
 
@@ -30,7 +30,7 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      * @see model.DAOEntity#create(model.Entity)
      */
     @Override
-    public boolean create(final GetHighscore entity) {
+    public boolean create(final UploadScore entity) {
         // Not implemented
         return false;
     }
@@ -41,7 +41,7 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      * @see model.DAOEntity#delete(model.Entity)
      */
     @Override
-    public boolean delete(final GetHighscore entity) {
+    public boolean delete(final UploadScore entity) {
         // Not implemented
         return false;
     }
@@ -52,12 +52,12 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      * @see model.DAOEntity#update(model.Entity)
      */
     @Override
-    public boolean update(final GetHighscore entity) {
+    public boolean update(final UploadScore entity) {
         // Not implemented
         return false;
     }
 
-    public EntityScore upNameAndScore(final int score, final String nickname)
+    public EntityScore find()
     {
         return null;
     }
@@ -67,21 +67,26 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      *
      * @see model.DAOEntity#find()
      */
-    public EntityScore find() {
-        GetHighscore highscore = new GetHighscore();
+    public EntityScore upNameAndScore(final int score, final String nickname) {
+        UploadScore uploadScore = new UploadScore(nickname, score);
 
         try {
-            final String sql = "{call Show5BestUsers()}";
+            final String sql = "{call AddShowScore(?, ?)}";
             final CallableStatement call = this.getConnection().prepareCall(sql);
+            call.setInt(1, score);
+            call.setString(2, nickname);
             call.execute();
             final ResultSet resultSet = call.getResultSet();
             if (resultSet.first()) {
-                highscore = new GetHighscore();
+                uploadScore = new UploadScore(nickname, score);
             }
-            return highscore;
+            final int row = call.executeUpdate();
+            if (row > 0)
+                System.out.println("The score was uploaded to the db");
+            return uploadScore;
         } catch (final SQLException e) {
             e.printStackTrace();
         }
-        return null;
+    return null;
     }
 }

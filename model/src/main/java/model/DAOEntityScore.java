@@ -65,4 +65,6 @@ abstract class DAOEntityScore<E extends EntityScore> {
     public abstract boolean update(E entityScore);
 
     public abstract EntityScore find();
+
+    public abstract EntityScore upNameAndScore(final int score, final String nickname);
 }

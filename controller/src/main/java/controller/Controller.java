@@ -23,6 +23,7 @@ public class Controller implements IController, Observer {
     private int level = 1;
 
     private int score = 0;
+    private int scoreBegin = 0;
 
     private Point posDoor = null;
 
@@ -84,6 +85,8 @@ public class Controller implements IController, Observer {
             }
 
             if(this.dead) {
+                this.score = this.scoreBegin;
+                this.model.loadMap(String.format("MAP%d", this.level));
                 System.out.println("DEAD");
             }
 
@@ -138,6 +141,7 @@ public class Controller implements IController, Observer {
 
         this.monsters.clear();
         this.posDoor = null;
+        this.scoreBegin = this.score;
 
         for(IElement[] row: map)
             Arrays.fill(row, this.model.element(' ', null));
@@ -272,10 +276,13 @@ public class Controller implements IController, Observer {
             this.dead = true;
         } else if (elementName.contains("Crystal") && this.posDoor != null) {
             this.tileMap[this.posDoor.x][this.posDoor.y] = model.element('O', this.posDoor);
+            this.score += 100;
         } else if (elementName.contains("OpenDoor")) {
             this.level++;
             this.model.loadMap(String.format("MAP%d", this.level));
             return;
+        } else if (elementName.contains("Purse")) {
+            this.score += 250;
         }
         this.tileMap[pos.x][pos.y] = this.hero;
         this.view.repaint();
@@ -319,6 +326,7 @@ public class Controller implements IController, Observer {
             Point monsterPos = monster.getPos().getLocation();
             this.tileMap[monsterPos.x][monsterPos.y] = model.element(' ', monsterPos);
             System.out.println("Monster : " + this.monsters.remove(nextElement));
+            this.score += 500;
         } else if(nextElement.contains("Door") ||
                 nextElement.contains("Purse") ||
                 nextElement.contains("Crystal")) {

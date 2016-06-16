@@ -4,7 +4,6 @@ import contract.IElement;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import javax.swing.JPanel;
 
 /**
@@ -69,8 +68,8 @@ class ViewPanel extends JPanel {
      */
     public void setSize(int width, int height) {
         super.setSize((width*32) + this.getInsets().left + this.getInsets().right,
-                (height*32) + this.getInsets().top + this.getInsets().bottom);
-        this.viewFrame.setSize(width*32, height*32);
+                (height*32) + this.getInsets().top + this.getInsets().bottom + 40);
+        this.viewFrame.setSize(width*32, height*32 + 40);
     }
 
 	/*
@@ -95,6 +94,9 @@ class ViewPanel extends JPanel {
                 }
             }
         }
-
+		graphics.setColor(Color.yellow);
+        graphics.setFont(new Font(null, Font.BOLD, 20));
+		graphics.drawString(String.format("SCORE : %d",
+                this.viewFrame.getController().getScore()), 10, this.getHeight() - 20);
     }
 }

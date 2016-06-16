@@ -22,5 +22,7 @@ public interface IController {
 
 	IElement[][] getTileMap();
 
+	int getScore();
+
 	IElement[][] parser(String tilemap);
 }

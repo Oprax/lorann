@@ -74,7 +74,6 @@ public class Controller implements IController, Observer {
 
             if(this.dead) {
                 System.out.println("DEAD");
-                this.hero = null;
             }
 
             for (Object o : this.monsters.entrySet()) {
@@ -255,6 +254,20 @@ public class Controller implements IController, Observer {
 
     private void moveFireBall() {
         Point currentPos = this.fireBall.getPos().getLocation();
+        MobileOrder direction = this.fireBall.getDirection();
+        for (MobileOrder dir : MobileOrder.getValues()) {
+            if(!dir.equals(direction)) {
+                Point aroundPos = this.computeNextPos(dir, currentPos);
+                IElement element = this.tileMap[aroundPos.x][aroundPos.y];
+                String elementName = element.getClass().getSimpleName();
+                if(elementName.contains("Monster")) {
+                    this.tileMap[aroundPos.x][aroundPos.y] = model.element(' ', aroundPos);
+                    this.monsters.remove(elementName);
+                    this.destroyFireBall();
+                    return;
+                }
+            }
+        }
         this.fireBall.animate();
         Point nextPos = this.computeNextPos(this.fireBall.getDirection(), currentPos);
 
@@ -273,6 +286,9 @@ public class Controller implements IController, Observer {
             this.fireBall.setLocation(nextPos);
             this.tileMap[nextPos.x][nextPos.y] = this.fireBall;
             this.destroyFireBall();
+            IMonster monster = this.monsters.get(nextElement);
+            Point monsterPos = monster.getPos().getLocation();
+            this.tileMap[monsterPos.x][monsterPos.y] = model.element(' ', monsterPos);
             System.out.println("Monster : " + this.monsters.remove(nextElement));
         } else if(nextElement.contains("Door") ||
                 nextElement.contains("Purse") ||

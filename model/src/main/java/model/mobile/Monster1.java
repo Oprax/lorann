@@ -17,6 +17,6 @@ public class Monster1 extends Mobile implements IMonster {
 
     @Override
     public MobileOrder getDirection(Point heroPos, IElement[][] tileMap) {
-        return MobileOrder.random();
+        return MobileOrder.Right;
     }
 }

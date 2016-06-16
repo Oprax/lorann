@@ -11,6 +11,10 @@ public enum MobileOrder {
     Left,
     Down;
 
+    public static List<MobileOrder> getValues() {
+        return VALUES;
+    }
+
     private static final List<MobileOrder> VALUES =
             Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();

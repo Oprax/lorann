@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 15 Juin 2016 à 15:33
+-- Généré le :  Jeu 16 Juin 2016 à 09:20
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -24,6 +24,14 @@ DELIMITER $$
 --
 -- Procédures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualScoreable`(IN `points` INT(15), IN `p_nickname` INT(15), IN `w_nickname` INT(15))
+    NO SQL
+BEGIN
+	CALL UpdateLastScore;
+    CALL UpdateScoreNickname(points, p_nickname);
+    CALL ShowActualUserScore(w_nickname);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `helloworldById`(IN `p_id` INT)
     READS SQL DATA
     SQL SECURITY INVOKER
@@ -42,29 +50,33 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `loadmapByKey`(IN `p_key` VARCHAR(50
     NO SQL
 SELECT * FROM jpublankproject.map where `map_name`=p_key$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RegisterScoreUser`(IN `nickname` VARCHAR(15))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RegisterHighscore`(IN `nickname` VARCHAR(15))
     NO SQL
-INSERT INTO `jpublanjproject`.`highscore` (`highscore_id`, `score`, `nickname`) VALUES ('', (SELECT MAX(Score) FROM score), nickname)$$
+INSERT INTO highscore (score, nickname) VALUES((SELECT MAX(score.score) FROM score), nickname)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Scoreable`(IN `points` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Scoreable`(IN `points` INT(15), IN `p_nickname` VARCHAR(15))
     NO SQL
 BEGIN
-	CALL UpdateLastScore(@UpdateLastScore);
-    CALL UpdateScore(@UpdateScore);
-    CALL SelectMaxScore(@SeclectMaxScore);
+	CALL UpdateLastScore;
+    CALL UpdateScoreNickname(points, p_nickname);
+    CALL Show5BestUsers;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SelectMaxScore`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Show5BestUsers`()
     NO SQL
-SELECT MAX(Score), nickname FROM highscore LIMIT 1$$
+SELECT SUM(score), nickname FROM score GROUP BY nickname ORDER BY score DESC LIMIT 5$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ShowActualUserScore`(IN `w_nickname` INT(15))
+    NO SQL
+SELECT SUM(score) AS Score FROM score WHERE nickname = w_nickname$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateLastScore`()
     NO SQL
 INSERT INTO score (LastScore) SELECT MAX(Score) FROM score$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateScore`(IN `points` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateScoreNickname`(IN `points` INT(15), IN `p_nickname` VARCHAR(15))
     NO SQL
-UPDATE score SET Score = LastScore + points$$
+INSERT INTO score (score, nickname) VALUES((LastScore + points), (p_nickname))$$
 
 DELIMITER ;
 
@@ -91,19 +103,6 @@ INSERT INTO `helloworld` (`id`, `key`, `message`) VALUES
 (2, 'FR', 'Bonjour le monde'),
 (3, 'DE', 'Hallo Welt'),
 (4, 'ID', 'Salamat pagi dunia');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `highscore`
---
-
-CREATE TABLE IF NOT EXISTS `highscore` (
-  `highscore_id` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  `nickname` varchar(15) NOT NULL,
-  PRIMARY KEY (`highscore_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -146,18 +145,9 @@ CREATE TABLE IF NOT EXISTS `score` (
   `score_id` int(11) NOT NULL AUTO_INCREMENT,
   `LastScore` int(11) NOT NULL,
   `score` int(11) NOT NULL,
+  `nickname` varchar(11) NOT NULL,
   PRIMARY KEY (`score_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Contenu de la table `score`
---
-
-INSERT INTO `score` (`score_id`, `LastScore`, `score`) VALUES
-(1, 0, 1000),
-(6, 500, 1500),
-(7, 1000, 2000),
-(8, 1500, 2500);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

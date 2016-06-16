@@ -3,9 +3,7 @@ package controller;
 import contract.*;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * The Class Controller.
@@ -21,6 +19,8 @@ public class Controller implements IController, Observer {
 	private IModel model;
 
     private IHero hero;
+
+    private HashMap<Point, IMonster> monsters = new HashMap<Point, IMonster>();
 
     private IFireball fireBall;
 
@@ -56,6 +56,13 @@ public class Controller implements IController, Observer {
         while (true) {
             if(this.fireBall != null) {
                 this.moveFireBall();
+            }
+
+            Iterator it = this.monsters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                IMonster monster = (IMonster) pair.getValue();
+                monster.move(this.tileMap, this.view, this.model);
             }
 
             this.view.repaint();
@@ -101,6 +108,8 @@ public class Controller implements IController, Observer {
         int y = lines[0].length();
         IElement[][] map = new IElement[x][y];
 
+        this.monsters.clear();
+
         for(IElement[] row: map)
             Arrays.fill(row, this.model.element(' ', null));
 
@@ -116,6 +125,10 @@ public class Controller implements IController, Observer {
                 if(c == 'L') {
                     this.hero = (IHero) element;
                 }
+                if(c == '1' || c == '2' || c == '3' || c == '4') {
+                    this.monsters.put(pos, (IMonster) element);
+                }
+
                 if (element != null) {
                     map[i][j] = element;
                 }
@@ -190,6 +203,8 @@ public class Controller implements IController, Observer {
 	}
 
     private void fire() {
+        if(this.fireBall != null)
+            return;
         this.destroyFireBall();
         MobileOrder direction = this.hero.getDirection();
         Point currentPos = this.hero.getPos().getLocation();
@@ -217,9 +232,7 @@ public class Controller implements IController, Observer {
     private void moveFireBall() {
         Point currentPos = this.fireBall.getPos().getLocation();
         this.fireBall.animate();
-        System.out.printf("DICK '%s'%n", currentPos);
         Point nextPos = this.computeNextPos(this.fireBall.getDirection(), currentPos);
-        System.out.printf("BUTT '%s'%n", currentPos);
 
         this.swapFireBall(nextPos);
 
@@ -236,6 +249,7 @@ public class Controller implements IController, Observer {
             this.fireBall.setLocation(nextPos);
             this.tileMap[nextPos.x][nextPos.y] = this.fireBall;
             this.destroyFireBall();
+            this.monsters.remove(nextPos);
         } else if(nextElement.contains("Door") ||
                 nextElement.contains("Purse") ||
                 nextElement.contains("Crystal")) {

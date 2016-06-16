@@ -20,7 +20,7 @@ public class FireBall extends Mobile implements IFireball {
         return step;
     }
 
-    @Override
+
     public void setDirection(MobileOrder direction) {
         this.direction = direction;
     }
@@ -30,7 +30,5 @@ public class FireBall extends Mobile implements IFireball {
         if(this.step > 0 && this.step < 6) {
             this.loadSprite(String.format("sprite\\fireball_%d.png", this.step));
         }
-
-        System.out.println(this.step);
     }
 }

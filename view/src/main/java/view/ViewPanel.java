@@ -96,7 +96,8 @@ class ViewPanel extends JPanel {
         }
 		graphics.setColor(Color.yellow);
         graphics.setFont(new Font(null, Font.BOLD, 20));
-		graphics.drawString(String.format("SCORE : %d",
-                this.viewFrame.getController().getScore()), 10, this.getHeight() - 20);
+		graphics.drawString(String.format("SCORE : %d    LEVEL : %d",
+                this.viewFrame.getController().getScore(),
+                this.viewFrame.getController().getLevel()), 10, this.getHeight() - 20);
     }
 }

@@ -23,8 +23,8 @@ public class Controller implements IController, Observer {
     private int level = 1;
 
     private int score = 0;
-    private int scoreBegin = 0;
 
+    private int scoreBegin = 0;
     private Point posDoor = null;
 
     private HashMap<String, IMonster> monsters = new HashMap<String, IMonster>();
@@ -35,6 +35,10 @@ public class Controller implements IController, Observer {
 
     public IElement[][] getTileMap() {
         return tileMap;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public int getScore() {

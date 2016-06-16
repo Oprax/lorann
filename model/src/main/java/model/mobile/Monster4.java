@@ -7,9 +7,14 @@ import java.awt.*;
 /**
  * Created by Yog on 14/06/2016.
  */
-public class Monster4 extends Monster {
+public class Monster4 extends Mobile implements IMonster {
     public Monster4(Point pos)
     {
         super("monster_4.png", true, pos);
+    }
+
+    @Override
+    public MobileOrder getDirection(Point heroPos, IElement[][] tileMap) {
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package contract;
 
+import java.awt.*;
+
 public interface IMonster extends IMobile {
-    IElement[][] move(IElement[][] tileMap, IView view, IModel model);
+    MobileOrder getDirection(Point heroPos, IElement[][] tileMap);
 }

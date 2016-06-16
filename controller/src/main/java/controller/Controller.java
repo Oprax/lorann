@@ -20,9 +20,10 @@ public class Controller implements IController, Observer {
 
     private IHero hero;
 
-    private HashMap<Point, IMonster> monsters = new HashMap<Point, IMonster>();
+    private HashMap<String, IMonster> monsters = new HashMap<String, IMonster>();
 
     private IFireball fireBall;
+    private boolean dead = false;
 
     public IElement[][] getTileMap() {
         return tileMap;
@@ -44,6 +45,19 @@ public class Controller implements IController, Observer {
         model.getObservable().addObserver(this);
 	}
 
+    private void printTileMap(IElement[][] tileMap) {
+        System.out.println("[");
+        for(int i =0; i < tileMap.length; i++) {
+            System.out.print("    [");
+            for(int j = 0; j < tileMap[0].length; j++) {
+                System.out.print(tileMap[i][j].getClass().getSimpleName()
+                        + ", ");
+            }
+            System.out.println("]");
+        }
+        System.out.println("]");
+    }
+
 	/**
 	 * Entry point of Controller
 	 * 
@@ -58,17 +72,21 @@ public class Controller implements IController, Observer {
                 this.moveFireBall();
             }
 
-            Iterator it = this.monsters.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
+            if(this.dead) {
+                System.out.println("DEAD");
+                this.hero = null;
+            }
+
+            for (Object o : this.monsters.entrySet()) {
+                Map.Entry pair = (Map.Entry) o;
                 IMonster monster = (IMonster) pair.getValue();
-                monster.move(this.tileMap, this.view, this.model);
+                this.moveMonster(monster);
             }
 
             this.view.repaint();
 
             try {
-                Thread.sleep(250);
+                Thread.sleep(300);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
@@ -123,10 +141,12 @@ public class Controller implements IController, Observer {
 
                 IElement element = this.model.element(c, pos);
                 if(c == 'L') {
+                    this.dead = false;
                     this.hero = (IHero) element;
                 }
                 if(c == '1' || c == '2' || c == '3' || c == '4') {
-                    this.monsters.put(pos, (IMonster) element);
+                    IMonster monster = (IMonster) element;
+                    this.monsters.put(monster.getClass().getSimpleName(), monster);
                 }
 
                 if (element != null) {
@@ -225,6 +245,10 @@ public class Controller implements IController, Observer {
         this.tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
 
         pos = this.hero.getPos();
+        if(this.tileMap[pos.x][pos.y].getClass()
+                .getSimpleName().contains("Monster")) {
+            this.dead = true;
+        }
         this.tileMap[pos.x][pos.y] = this.hero;
         this.view.repaint();
     }
@@ -244,12 +268,12 @@ public class Controller implements IController, Observer {
     }
 
     private void swapFireBall(Point nextPos) {
-        String nextElement = this.tileMap[nextPos.x][nextPos.y].getClass().getCanonicalName();
+        String nextElement = this.tileMap[nextPos.x][nextPos.y].getClass().getSimpleName();
         if(nextElement.contains("Monster")) {
             this.fireBall.setLocation(nextPos);
             this.tileMap[nextPos.x][nextPos.y] = this.fireBall;
             this.destroyFireBall();
-            this.monsters.remove(nextPos);
+            System.out.println("Monster : " + this.monsters.remove(nextElement));
         } else if(nextElement.contains("Door") ||
                 nextElement.contains("Purse") ||
                 nextElement.contains("Crystal")) {
@@ -261,8 +285,34 @@ public class Controller implements IController, Observer {
         }
     }
 
+    private void moveMonster(IMonster monster) {
+        Point pos = monster.getPos().getLocation();
+        Point nextPos = this.computeNextPos(
+                monster.getDirection(
+                        this.hero.getPos().getLocation(),
+                        this.tileMap),
+                pos);
+        if(nextPos != pos) {
+            String element = tileMap[nextPos.x][nextPos.y].getClass()
+                    .getSimpleName();
+            if(element.contains("Hero")) {
+                this.dead = true;
+            } else if(!element.contains("Monster") &&
+                    !element.contains("Purse") &&
+                    !element.contains("Door")) {
+                tileMap[pos.x][pos.y] = model.element(' ', pos.getLocation());
+                monster.setLocation(nextPos);
+                tileMap[nextPos.x][nextPos.y] = monster;
+            }
+        }
+    }
+
     private Point computeNextPos(MobileOrder direction, Point currentPos) {
         Point nextPos = currentPos.getLocation();
+
+        if(direction == null)
+            return nextPos;
+
         switch (direction) {
             case Left:
                 if(currentPos.y > 0 &&

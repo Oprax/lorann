@@ -26,8 +26,6 @@ public class Controller implements IController, Observer {
 
     private int score = 0;
 
-    private int scoreBegin = 0;
-
     private Point posDoor = null;
 
     private HashMap<String, IMonster> monsters = new HashMap<String, IMonster>();
@@ -94,13 +92,11 @@ public class Controller implements IController, Observer {
             }
 
             if(this.dead) {
-                this.score = this.scoreBegin;
                 this.model.loadMap("MAP1");
                 this.view.printMessage(String.format("YOU DIED! You made a score of : %d\nPress OK to restart the game", this.score));
                 this.model.upNameAndScore(this.score, this.pseudo);
                 this.level = 1;
                 this.score = 0;
-                this.scoreBegin = 0;
             }
 
             for (Object o : this.monsters.entrySet()) {
@@ -154,7 +150,6 @@ public class Controller implements IController, Observer {
 
         this.monsters.clear();
         this.posDoor = null;
-        this.scoreBegin = this.score;
 
         for(IElement[] row: map)
             Arrays.fill(row, this.model.element(' ', null));
@@ -295,10 +290,8 @@ public class Controller implements IController, Observer {
                 if(this.level > 9) {
                     this.model.upNameAndScore(this.score, this.pseudo);
                      this.view.printMessage(String.format("WELL DONE %s! Your score is : %d\nPress OK to restart the game", this.pseudo, this.score));
-                    this.model.loadMap("MAP1");
                     this.score = 0;
-                    this.scoreBegin = 0;
-                     this.level = 1;
+                    this.level = 1;
                 }
             this.model.loadMap(String.format("MAP%d", this.level));
             return;

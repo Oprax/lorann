@@ -103,7 +103,7 @@ public class Controller implements IController, Observer {
             this.view.repaint();
 
             try {
-                Thread.sleep(300);
+                Thread.sleep(250);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }

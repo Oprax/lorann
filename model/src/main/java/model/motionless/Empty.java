@@ -1,8 +1,6 @@
 package model.motionless;
 
-import model.Element;
-
-public class Empty extends Element {
+public class Empty extends Motionless {
     public Empty() {
         super("", true);
     }

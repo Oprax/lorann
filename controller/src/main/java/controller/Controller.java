@@ -95,8 +95,11 @@ public class Controller implements IController, Observer {
 
             if(this.dead) {
                 this.score = this.scoreBegin;
-                this.model.loadMap(String.format("MAP%d", this.level));
-                System.out.println("DEAD");
+                this.model.loadMap("MAP1");
+                this.view.printMessage(String.format("YOU DIED! You made a score of : %d\nPress OK to restart the game", this.score));
+                this.level = 1;
+                this.score = 0;
+                this.scoreBegin = 0;
             }
 
             for (Object o : this.monsters.entrySet()) {

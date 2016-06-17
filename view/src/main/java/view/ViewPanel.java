@@ -87,7 +87,7 @@ class ViewPanel extends JPanel {
 		graphics.setColor(Color.yellow);
 		graphics.setFont(new Font(null, Font.BOLD, 20));
 
-        int scoreIndex = 1;
+        int scoreIndex = 0;
 
         String[][] scores = this.viewFrame.getModel().getHighScore();
         System.out.println(Arrays.deepToString(scores));
@@ -104,8 +104,13 @@ class ViewPanel extends JPanel {
                     else if(tileMap[i][j].getClass().getSimpleName().contains("Title")) {
                         graphics.drawString("HIGHSCORE", j*32, i*32 + 20);
                     } else if(tileMap[i][j].getClass().getSimpleName().contains("Score")) {
-                        graphics.drawString("HIGHSCORE", j*32 + 5, i*32 + 20);
-                        scoreIndex++;
+                        if(scoreIndex < scores[0].length) {
+                            graphics.drawString(
+                                    String.format("%s %s",
+                                            scores[0][scoreIndex],
+                                            scores[1][scoreIndex]), j*32 + 5, i*32 + 20);
+                            scoreIndex++;
+                        }
                     }
                 }
             }

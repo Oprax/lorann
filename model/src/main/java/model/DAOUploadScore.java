@@ -67,26 +67,20 @@ class DAOUploadScore extends DAOEntityScore<UploadScore> {
      *
      * @see model.DAOEntity#find()
      */
-    public EntityScore upNameAndScore(final int score, final String nickname) {
-        UploadScore uploadScore = new UploadScore(nickname, score);
+    public void upNameAndScore(final int score, final String nickname) {
+        //UploadScore uploadScore = new UploadScore(nickname, score);
 
         try {
             final String sql = "{call AddShowScore(?, ?)}";
             final CallableStatement call = this.getConnection().prepareCall(sql);
             call.setInt(1, score);
             call.setString(2, nickname);
-            call.execute();
-            final ResultSet resultSet = call.getResultSet();
-            if (resultSet.first()) {
-                uploadScore = new UploadScore(nickname, score);
-            }
+            //call.execute();
             final int row = call.executeUpdate();
             if (row > 0)
                 System.out.println("The score was uploaded to the db");
-            return uploadScore;
         } catch (final SQLException e) {
             e.printStackTrace();
         }
-    return null;
     }
 }

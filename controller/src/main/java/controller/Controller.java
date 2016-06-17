@@ -97,6 +97,7 @@ public class Controller implements IController, Observer {
                 this.score = this.scoreBegin;
                 this.model.loadMap("MAP1");
                 this.view.printMessage(String.format("YOU DIED! You made a score of : %d\nPress OK to restart the game", this.score));
+                this.model.upNameAndScore(this.score, this.pseudo);
                 this.level = 1;
                 this.score = 0;
                 this.scoreBegin = 0;

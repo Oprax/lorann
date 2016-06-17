@@ -57,9 +57,9 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
         return false;
     }
 
-    public EntityScore upNameAndScore(final int score, final String nickname)
+    public void upNameAndScore(final int score, final String nickname)
     {
-        return null;
+
     }
 
     /*

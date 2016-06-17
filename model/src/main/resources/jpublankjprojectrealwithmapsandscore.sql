@@ -32,7 +32,7 @@ BEGIN
     CALL ShowActualUserScore(w_nickname);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddSchowScore`(IN `points` INT(15), IN `p_nickname` VARCHAR(15))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddShowScore`(IN `points` INT(15), IN `p_nickname` VARCHAR(15))
     NO SQL
 BEGIN
 	CALL UpdateLastScore;

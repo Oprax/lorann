@@ -92,4 +92,17 @@ public class Model extends Observable implements IModel {
 			e.printStackTrace();
 		}
 	}
+
+	public void upNameAndScore(final int score, final String nickname)
+	{
+		try
+		{
+			final DAOUploadScore daoUploadScore = new DAOUploadScore(DBConnection.getInstance().getConnection());
+			daoUploadScore.upNameAndScore(score, nickname);
+		}
+		catch (final SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

@@ -66,5 +66,5 @@ abstract class DAOEntityScore<E extends EntityScore> {
 
     public abstract EntityScore find();
 
-    public abstract EntityScore upNameAndScore(final int score, final String nickname);
+    public abstract void upNameAndScore(final int score, final String nickname);
 }

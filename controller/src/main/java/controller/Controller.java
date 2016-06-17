@@ -96,6 +96,7 @@ public class Controller implements IController, Observer {
                 this.score = this.scoreBegin;
                 this.model.loadMap(String.format("MAP%d", this.level));
                 System.out.println("DEAD");
+                this.model.upNameAndScore(this.score, this.pseudo);
             }
 
             for (Object o : this.monsters.entrySet()) {

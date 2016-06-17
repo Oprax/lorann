@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * The Class DAOLoadMap.
@@ -65,22 +66,24 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      * @see model.DAOEntity#find()
      */
     public String[][] getHighScore() {
-        GetHighscore highscore = new GetHighscore();
-        String[][] stringHighScore = null;
+        String[][] stringHighScore = {{},{}};
 
         try {
-            final String sql = "{call Show5BestUsers()}";
-            final CallableStatement call = this.getConnection().prepareCall(sql);
-            call.execute();
-            final ResultSet resultSet = call.getResultSet();
-            if (resultSet.first()) {
-                highscore = new GetHighscore();
+            ArrayList<String> aScores = new ArrayList<String>();
+            ArrayList<String> aNicknames = new ArrayList<String>();
+            String sql = "{call ShowNicknamesScores()}";
+            CallableStatement call = this.getConnection().prepareCall(sql);
+            ResultSet rs = call.executeQuery(sql);
+            while (rs.next()) {
+                aScores.add(rs.getString("score"));
+                aNicknames.add(rs.getString("nickname"));
             }
-            Array   tmp;
-            tmp = call.getArray("score");
-            stringHighScore[1] = (String[])tmp.getArray();
-            tmp = call.getArray("nickname");
-            stringHighScore[0] = (String[])tmp.getArray();
+            //System.out.println("NICKNAME SIZE !!!!! DEBUG DEBUG DEBUG DEBUG DEBUG " + aNicknames.size() + " DEBUG DEBUG DEBUG DEBUG DEBUG ");
+            //System.out.println("SCORE SIZE !!!!! DEBUG DEBUG DEBUG DEBUG DEBUG " + aScores.size() + " DEBUG DEBUG DEBUG DEBUG DEBUG ");
+            stringHighScore[0] = new String[aNicknames.size()];
+            stringHighScore[1] = new String[aScores.size()];
+            stringHighScore[0] = aNicknames.toArray(stringHighScore[0]);
+            stringHighScore[1] = aScores.toArray(stringHighScore[1]);
             return stringHighScore;
         } catch (final SQLException e) {
             e.printStackTrace();

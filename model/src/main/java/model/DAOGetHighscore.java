@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * The Class DAOLoadMap.
@@ -67,8 +64,9 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      *
      * @see model.DAOEntity#find()
      */
-    public java.sql.Array getHighScore() {
+    public String[][] getHighScore() {
         GetHighscore highscore = new GetHighscore();
+        String[][] stringHighScore = null;
 
         try {
             final String sql = "{call Show5BestUsers()}";
@@ -78,7 +76,12 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
             if (resultSet.first()) {
                 highscore = new GetHighscore();
             }
-            return call.getArray("score");
+            Array   tmp;
+            tmp = call.getArray("score");
+            stringHighScore[1] = (String[])tmp.getArray();
+            tmp = call.getArray("nickname");
+            stringHighScore[0] = (String[])tmp.getArray();
+            return stringHighScore;
         } catch (final SQLException e) {
             e.printStackTrace();
         }

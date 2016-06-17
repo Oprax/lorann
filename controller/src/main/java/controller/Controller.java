@@ -287,6 +287,13 @@ public class Controller implements IController, Observer {
             this.score += 100;
         } else if (elementName.contains("OpenDoor")) {
             this.level++;
+             if(this.level > 9) {
+                 this.view.printMessage("YOU WIN\nPress OK");
+                 this.model.loadMap("MAP1");
+                 this.score = 0;
+                 this.scoreBegin = 0;
+                 this.level = 1;
+             }
             this.model.loadMap(String.format("MAP%d", this.level));
             return;
         } else if (elementName.contains("Purse")) {

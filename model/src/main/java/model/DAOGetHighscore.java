@@ -67,7 +67,7 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
      *
      * @see model.DAOEntity#find()
      */
-    public EntityScore find() {
+    public java.sql.Array getHighScore() {
         GetHighscore highscore = new GetHighscore();
 
         try {
@@ -78,7 +78,7 @@ class DAOGetHighscore extends DAOEntityScore<GetHighscore> {
             if (resultSet.first()) {
                 highscore = new GetHighscore();
             }
-            return highscore;
+            return call.getArray("score");
         } catch (final SQLException e) {
             e.printStackTrace();
         }

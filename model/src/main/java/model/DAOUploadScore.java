@@ -57,7 +57,7 @@ class DAOUploadScore extends DAOEntityScore<UploadScore> {
         return false;
     }
 
-    public EntityScore find()
+    public EntityScore getHighScore()
     {
         return null;
     }

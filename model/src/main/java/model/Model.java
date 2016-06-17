@@ -18,6 +18,9 @@ public class Model extends Observable implements IModel {
 	/** The map */
 	private String map = "";
 
+	/** The score */
+	private int score = 0;
+
 	/**
 	 * Instantiates a new model.
 	 */
@@ -108,5 +111,28 @@ public class Model extends Observable implements IModel {
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void setGetHighScore(final int score)
+	{
+		this.score = score;
+	}
+
+	public int getGetHighScore()
+	{
+		return this.score;
+	}
+
+	public java.sql.Array getHighScore()
+	{
+		try {
+			final DAOGetHighscore daoGetHighscore = new DAOGetHighscore(DBConnection.getInstance().getConnection());
+			return (daoGetHighscore.getHighScore());
+		}
+		catch (final SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

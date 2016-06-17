@@ -81,6 +81,10 @@ class ViewPanel extends JPanel {
 	protected void paintComponent(final Graphics graphics) {
         graphics.setColor(Color.black);
         graphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+		graphics.setColor(Color.yellow);
+		graphics.setFont(new Font(null, Font.BOLD, 20));
+
+        int scoreIndex = 1;
 
         if(this.tileMap != null)
         {
@@ -91,11 +95,15 @@ class ViewPanel extends JPanel {
                     BufferedImage image = tileMap[i][j].getImage();
                     if(image != null)
                         graphics.drawImage(image, j*32, i*32, null);
+                    else if(tileMap[i][j].getClass().getSimpleName().contains("Title")) {
+                        graphics.drawString("HIGHSCORE", j*32, i*32 + 20);
+                    } else if(tileMap[i][j].getClass().getSimpleName().contains("Score")) {
+                        graphics.drawString("HIGHSCORE", j*32 + 5, i*32 + 20);
+                        scoreIndex++;
+                    }
                 }
             }
         }
-		graphics.setColor(Color.yellow);
-        graphics.setFont(new Font(null, Font.BOLD, 20));
 		graphics.drawString(String.format("SCORE : %d    LEVEL : %d",
                 this.viewFrame.getController().getScore(),
                 this.viewFrame.getController().getLevel()), 10, this.getHeight() - 20);

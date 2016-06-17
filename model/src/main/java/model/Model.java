@@ -55,6 +55,10 @@ public class Model extends Observable implements IModel {
 				return new Monster3(pos);
 			case '4':
 				return new Monster4(pos);
+			case 'T':
+				return new Title();
+			case 'S':
+				return new Score();
 			default:
 				return new Empty();
 		}

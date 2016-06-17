@@ -38,5 +38,7 @@ public interface IModel {
 
 	IElement element(char c, Point pos);
 
+    String[][] getHighScore();
+
 	void upNameAndScore(final int score, final String nickname);
 }

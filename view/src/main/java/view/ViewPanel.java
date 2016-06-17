@@ -4,6 +4,9 @@ import contract.IElement;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.sql.Array;
+import java.sql.SQLException;
+import java.util.Arrays;
 import javax.swing.JPanel;
 
 /**
@@ -85,6 +88,9 @@ class ViewPanel extends JPanel {
 		graphics.setFont(new Font(null, Font.BOLD, 20));
 
         int scoreIndex = 1;
+
+        String[][] scores = this.viewFrame.getModel().getHighScore();
+        System.out.println(Arrays.deepToString(scores));
 
         if(this.tileMap != null)
         {

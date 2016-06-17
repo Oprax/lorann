@@ -123,7 +123,7 @@ public class Model extends Observable implements IModel {
 		return this.score;
 	}
 
-	public java.sql.Array getHighScore()
+	public String[][] getHighScore()
 	{
 		try {
 			final DAOGetHighscore daoGetHighscore = new DAOGetHighscore(DBConnection.getInstance().getConnection());

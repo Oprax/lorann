@@ -110,6 +110,18 @@ CREATE TABLE IF NOT EXISTS `map` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
+-- Structure de la table `map`
+--
+
+DROP TABLE IF EXISTS `map`;
+CREATE TABLE IF NOT EXISTS `map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `map_name` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `map` text CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+--
 -- Contenu de la table `map`
 --
 

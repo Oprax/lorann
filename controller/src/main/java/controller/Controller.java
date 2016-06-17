@@ -293,6 +293,7 @@ public class Controller implements IController, Observer {
         } else if (elementName.contains("OpenDoor")) {
             this.level++;
                 if(this.level > 9) {
+                    this.model.upNameAndScore(this.score, this.pseudo);
                      this.view.printMessage(String.format("WELL DONE %s! Your score is : %d\nPress OK to restart the game", this.pseudo, this.score));
                     this.model.loadMap("MAP1");
                     this.score = 0;

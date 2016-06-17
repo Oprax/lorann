@@ -110,6 +110,18 @@ CREATE TABLE IF NOT EXISTS `map` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
+-- Structure de la table `map`
+--
+
+DROP TABLE IF EXISTS `map`;
+CREATE TABLE IF NOT EXISTS `map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `map_name` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `map` text CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+--
 -- Contenu de la table `map`
 --
 
@@ -140,23 +152,6 @@ CREATE TABLE IF NOT EXISTS `score` (
   `nickname` varchar(11) NOT NULL,
   PRIMARY KEY (`score_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `score`
---
-
-INSERT INTO `score` (`score_id`, `score`, `nickname`) VALUES
-(49, 600, 'ass'),
-(50, 600, 'ass'),
-(51, 1100, 'lol'),
-(52, 1100, 'lol'),
-(53, 0, 'mdr'),
-(54, 0, 'mdr'),
-(55, 2900, 'gfssd'),
-(56, 2900, 'gfssd'),
-(57, 0, 'fsdhiof'),
-(58, 1100, 'bite'),
-(59, 600, 'cul');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

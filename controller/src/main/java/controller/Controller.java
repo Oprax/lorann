@@ -231,6 +231,7 @@ public class Controller implements IController, Observer {
                 break;
             case MENU:
                 this.model.loadMap("MENU");
+                this.level = 0;
                 break;
             case WORKSHOP:
                 this.model.loadMap("WORKSHOP");

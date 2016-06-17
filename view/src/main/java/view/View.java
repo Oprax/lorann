@@ -98,6 +98,10 @@ public class View implements IView, Runnable {
 		this.viewFrame.printMessage(message);
 	}
 
+	public String getPseudo() {
+		return this.viewFrame.pseudo();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *

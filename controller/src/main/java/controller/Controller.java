@@ -20,6 +20,8 @@ public class Controller implements IController, Observer {
 
     private IHero hero;
 
+    private String pseudo;
+
     private int level = 1;
 
     private int score = 0;
@@ -80,6 +82,8 @@ public class Controller implements IController, Observer {
 	 * @see contract.IController#start()
 	 */
 	public void start() {
+        this.pseudo = this.view.getPseudo();
+        System.out.println(this.pseudo);
         this.orderPerform(ControllerOrder.MENU);
 
         // Game Loop

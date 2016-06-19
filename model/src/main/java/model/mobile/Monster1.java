@@ -1,12 +1,11 @@
 package model.mobile;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+import com.sun.deploy.util.ArrayUtil;
 import contract.IElement;
 import contract.IMonster;
 import contract.MobileOrder;
 
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * Created by Yog on 14/06/2016.
@@ -32,12 +31,14 @@ public class Monster1 extends Mobile implements IMonster {
 
         for (MobileOrder dir : MobileOrder.values()) {
             Point aroundPos = MobileOrder.getPos(pos, dir);
-            int aroundDist = (heroPos.x-aroundPos.x)*(heroPos.x-aroundPos.x) +
-                    (heroPos.y-aroundPos.y)*(heroPos.y-aroundPos.y);
+            if (tileMap[aroundPos.x][aroundPos.y].getPermeability()) {
+                int aroundDist = (heroPos.x-aroundPos.x)*(heroPos.x-aroundPos.x) +
+                        (heroPos.y-aroundPos.y)*(heroPos.y-aroundPos.y);
 
-            if(aroundDist < distance) {
-                distance = aroundDist;
-                direction = dir;
+                if(aroundDist < distance) {
+                    distance = aroundDist;
+                    direction = dir;
+                }
             }
         }
 

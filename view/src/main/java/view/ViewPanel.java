@@ -89,8 +89,7 @@ class ViewPanel extends JPanel {
 
         int scoreIndex = 0;
 
-        String[][] scores = this.viewFrame.getModel().getHighScore();
-        System.out.println(Arrays.deepToString(scores));
+        String[][] scores = null;
 
         if(this.tileMap != null)
         {
@@ -104,6 +103,9 @@ class ViewPanel extends JPanel {
                     else if(tileMap[i][j].getClass().getSimpleName().contains("Title")) {
                         graphics.drawString("HIGHSCORE", j*32, i*32 + 20);
                     } else if(tileMap[i][j].getClass().getSimpleName().contains("Score")) {
+						if (scores == null)
+							scores = this.viewFrame.getModel().getHighScore();
+
                         if(scoreIndex < scores[0].length) {
                             graphics.drawString(
                                     String.format("%s %s",

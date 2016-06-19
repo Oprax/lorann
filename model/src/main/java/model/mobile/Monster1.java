@@ -1,10 +1,12 @@
 package model.mobile;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import contract.IElement;
 import contract.IMonster;
 import contract.MobileOrder;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Created by Yog on 14/06/2016.
@@ -17,6 +19,8 @@ public class Monster1 extends Mobile implements IMonster {
 
     @Override
     public MobileOrder getDirection(Point heroPos, IElement[][] tileMap) {
+
+
         Point pos = this.getPos().getLocation();
 
         System.out.printf("Hero : %s%n", heroPos);
@@ -24,23 +28,16 @@ public class Monster1 extends Mobile implements IMonster {
 
         MobileOrder direction = MobileOrder.random();
 
-        if(pos.x == heroPos.x) {
-            if(pos.y > heroPos.y) {
-                direction = MobileOrder.Left;
-            } else if (pos.y < heroPos.y) {
-                direction = MobileOrder.Right;
-            }
-        } else if(pos.y == heroPos.y) {
-            if(pos.x > heroPos.x) {
-                direction = MobileOrder.Up;
-            } else if (pos.x < heroPos.x) {
-                direction = MobileOrder.Down;
-            }
-        } else if (pos.x < heroPos.x) {
-            if(pos.y > heroPos.y) {
-                direction = MobileOrder.Down;
-            } else if (pos.y < heroPos.y) {
-                direction = MobileOrder.Left;
+        int distance = 10000;
+
+        for (MobileOrder dir : MobileOrder.values()) {
+            Point aroundPos = MobileOrder.getPos(pos, dir);
+            int aroundDist = (heroPos.x-aroundPos.x)*(heroPos.x-aroundPos.x) +
+                    (heroPos.y-aroundPos.y)*(heroPos.y-aroundPos.y);
+
+            if(aroundDist < distance) {
+                distance = aroundDist;
+                direction = dir;
             }
         }
 

@@ -7,7 +7,7 @@ public interface IHero extends IMobile {
     /**
      * @author Dorian
      * @param order from the user
-     * @param tileMap check element and size map
+     * @param tileMap check elements permeability and size map
      * @param view
      * Override move method from mobile for Hero element
      */

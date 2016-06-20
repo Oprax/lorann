@@ -1,5 +1,7 @@
 package contract;
 
+import java.awt.Point;
+
 /**
  * The Interface IController.
  *
@@ -35,21 +37,15 @@ public interface IController {
 	 */
 	int getScore();
 
-	/**
-<<<<<<< HEAD
-	 * @return Hero
-	 */
-	IHero getHero();
+    /**
+     * @param direction
+     * @param currentPos
+     * @return
+     */
+    Point computeNextPos(MobileOrder direction, Point currentPos);
 
 	/**
-	 * @return FireBall
-	 */
-	IFireball getFireBall();
-
-	/**
-=======
      * Get the level according to the number of the map played for the draw string at the bottom of the window
->>>>>>> master
 	 * @return Level
      * @author Dorian
 	 */

@@ -285,4 +285,56 @@ public class ControllerTest {
             }
         }
     }
+
+    @Test
+    public void TestComputeNextPosUp() throws Exception {
+        this.controller.orderPerform(ControllerOrder.WORKSHOP);
+        Point nextPos = this.controller.computeNextPos(
+                MobileOrder.Up,
+                new Point(5, 5)
+        );
+        assertEquals(
+                new Point(4, 5),
+                nextPos
+        );
+    }
+
+    @Test
+    public void TestComputeNextPosLeft() throws Exception {
+        this.controller.orderPerform(ControllerOrder.WORKSHOP);
+        Point nextPos = this.controller.computeNextPos(
+                MobileOrder.Left,
+                new Point(5, 5)
+        );
+        assertEquals(
+                new Point(5, 4),
+                nextPos
+        );
+    }
+
+    @Test
+    public void TestComputeNextPosDown() throws Exception {
+        this.controller.orderPerform(ControllerOrder.WORKSHOP);
+        Point nextPos = this.controller.computeNextPos(
+                MobileOrder.Down,
+                new Point(5, 5)
+        );
+        assertEquals(
+                new Point(6, 5),
+                nextPos
+        );
+    }
+
+    @Test
+    public void TestComputeNextPosRight() throws Exception {
+        this.controller.orderPerform(ControllerOrder.WORKSHOP);
+        Point nextPos = this.controller.computeNextPos(
+                MobileOrder.Right,
+                new Point(5, 5)
+        );
+        assertEquals(
+                new Point(5, 6),
+                nextPos
+        );
+    }
 }

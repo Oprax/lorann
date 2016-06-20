@@ -10,91 +10,101 @@ import java.util.*;
  */
 public class Controller implements IController, Observer {
 
-	/** The view. */
-	private IView view;
+    /** The view. */
+    private IView view;
 
+    /**
+     * tileMap
+     */
     private IElement[][] tileMap;
 
     /** The model. */
-	private IModel model;
+    private IModel model;
 
+    /**
+     * Hero
+     */
     private IHero hero;
 
+    /**
+     * Pseudo
+     */
     private String pseudo;
 
+    /**
+     * Level
+     */
     private int level = 1;
 
+    /**
+     * Score
+     */
     private int score = 0;
 
+    /**
+     * Position of Door
+     */
     private Point posDoor = null;
 
+    /**
+     * List of monster alive
+     */
     private HashMap<String, IMonster> monsters = new HashMap<String, IMonster>();
 
+    /**
+     * Fireball
+     */
     private IFireball fireBall;
 
+    /**
+     * Boolean representing hero
+     */
     private boolean dead = false;
 
+    /**
+     * @return return tileMap
+     */
     public IElement[][] getTileMap() {
         return tileMap;
     }
 
+    /**
+     * @return Level
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * @return Score
+     */
     public int getScore() {
         return score;
     }
 
     /**
-     * @return Hero
+     * Instantiates a new controller.
+     *
+     * @param view
+     *          the view
+     * @param model
+     *          the model
      */
-    public IHero getHero() {
-        return hero;
-    }
-
-    /**
-     * @return FireBall
-     */
-    public IFireball getFireBall() {
-        return fireBall;
-    }
-
-    /**
-	 * Instantiates a new controller.
-	 *
-	 * @param view
-	 *          the view
-	 * @param model
-	 *          the model
-	 */
-	public Controller(final IView view, final IModel model) {
-		this.setView(view);
-		this.setModel(model);
+    public Controller(final IView view, final IModel model) {
+        this.setView(view);
+        this.setModel(model);
         this.tileMap = this.parser(this.model.getMap());
         this.hero = (IHero) model.element('L', new Point());
         model.getObservable().addObserver(this);
-	}
-
-    private void printTileMap(IElement[][] tileMap) {
-        System.out.println("[");
-        for(int i =0; i < tileMap.length; i++) {
-            System.out.print("    [");
-            for(int j = 0; j < tileMap[0].length; j++) {
-                System.out.print(tileMap[i][j].getClass().getSimpleName()
-                        + ", ");
-            }
-            System.out.println("]");
-        }
-        System.out.println("]");
     }
 
-	/**
-	 * Entry point of Controller
-	 * 
-	 * @see contract.IController#start()
-	 */
-	public void start() {
+    /**
+     * Entry point of Controller
+     * Launch GameLoop
+     *
+     * @see contract.IController#start()
+     */
+    public void start() {
         this.pseudo = this.view.getPseudo();
         System.out.println(this.pseudo);
         this.orderPerform(ControllerOrder.MENU);
@@ -127,27 +137,27 @@ public class Controller implements IController, Observer {
                 Thread.currentThread().interrupt();
             }
         }
-	}
+    }
 
-	/**
-	 * Sets the view.
-	 *
-	 * @param view
-	 *          the new view
-	 */
-	private void setView(final IView view) {
-		this.view = view;
-	}
+    /**
+     * Sets the view.
+     *
+     * @param view
+     *          the new view
+     */
+    private void setView(final IView view) {
+        this.view = view;
+    }
 
-	/**
-	 * Sets the model.
-	 *
-	 * @param model
-	 *          the new model
-	 */
-	private void setModel(final IModel model) {
-		this.model = model;
-	}
+    /**
+     * Sets the model.
+     *
+     * @param model
+     *          the new model
+     */
+    private void setModel(final IModel model) {
+        this.model = model;
+    }
 
 
     /**
@@ -174,7 +184,7 @@ public class Controller implements IController, Observer {
             for(int j = 0; j < y; j++)
             {
                 char c = lines[i].charAt(j);
-				Point pos = new Point(i, j);
+                Point pos = new Point(i, j);
 
                 IElement element = this.model.element(c, pos);
                 if(c == 'L') {
@@ -195,34 +205,34 @@ public class Controller implements IController, Observer {
         }
 
         return map;
-	}
+    }
 
-	/**
-	 * @param controllerOrder Load map from model
+    /**
+     * @param controllerOrder Load map from model
      *
-	 * @see contract.IController#orderPerform(contract.ControllerOrder)
-	 */
-	public void orderPerform(final ControllerOrder controllerOrder) {
+     * @see contract.IController#orderPerform(contract.ControllerOrder)
+     */
+    public void orderPerform(final ControllerOrder controllerOrder) {
         if (controllerOrder == null)
             return;
 
-		switch (controllerOrder) {
+        switch (controllerOrder) {
             case MAP1:
-				this.model.loadMap("MAP1");
+                this.model.loadMap("MAP1");
                 this.level = 1;
-				break;
+                break;
             case MAP2:
-				this.model.loadMap("MAP2");
+                this.model.loadMap("MAP2");
                 this.level = 2;
-				break;
+                break;
             case MAP3:
-				this.model.loadMap("MAP3");
+                this.model.loadMap("MAP3");
                 this.level = 3;
-				break;
+                break;
             case MAP4:
-				this.model.loadMap("MAP4");
+                this.model.loadMap("MAP4");
                 this.level = 4;
-				break;
+                break;
             case MAP5:
                 this.model.loadMap("MAP5");
                 this.level = 5;
@@ -266,13 +276,16 @@ public class Controller implements IController, Observer {
             case FIRE:
                 this.fire();
                 break;
-			default:
+            default:
                 this.model.loadMap("TEST");
                 this.level = 0;
-				break;
-		}
-	}
+                break;
+        }
+    }
 
+    /**
+     * Launch a fireball and prepare animation
+     */
     private void fire() {
         if(this.fireBall != null)
             return;
@@ -287,9 +300,9 @@ public class Controller implements IController, Observer {
             this.view.repaint();
         }
     }
-        /** Function checking if the hero is moving out of the map,
-         * then checking if it collides with an object which permeability is false,
-         * then applies the changes of position if the hero can move */
+    /** Function checking if the hero is moving out of the map,
+     * then checking if it collides with an object which permeability is false,
+     * then applies the changes of position if the hero can move */
     private void moveHero(MobileOrder order) {
         Point pos = this.hero.getPos();
         this.hero.move(order, tileMap, this.view);
@@ -304,12 +317,12 @@ public class Controller implements IController, Observer {
             this.score += 100;
         } else if (elementName.contains("OpenDoor")) {
             this.level++;
-                if(this.level > 9) {
-                    this.model.upNameAndScore(this.score, this.pseudo);
-                     this.view.printMessage(String.format("WELL DONE %s! Your score is : %d\nPress OK to restart the game", this.pseudo, this.score));
-                    this.score = 0;
-                    this.level = 1;
-                }
+            if(this.level > 9) {
+                this.model.upNameAndScore(this.score, this.pseudo);
+                this.view.printMessage(String.format("WELL DONE %s! Your score is : %d\nPress OK to restart the game", this.pseudo, this.score));
+                this.score = 0;
+                this.level = 1;
+            }
             this.model.loadMap(String.format("MAP%d", this.level));
             return;
         } else if (elementName.contains("Purse")) {
@@ -319,6 +332,11 @@ public class Controller implements IController, Observer {
         this.view.repaint();
     }
 
+    /**
+     * Compute next position and detect collision
+     *
+     * @see controller.Controller#swapFireBall(Point)
+     */
     private void moveFireBall() {
         Point currentPos = this.fireBall.getPos().getLocation();
         MobileOrder direction = this.fireBall.getDirection();
@@ -347,6 +365,10 @@ public class Controller implements IController, Observer {
         }
     }
 
+    /**
+     * Swap the fireball in tileMap
+     * @param nextPos
+     */
     private void swapFireBall(Point nextPos) {
         String nextElement = this.tileMap[nextPos.x][nextPos.y].getClass().getSimpleName();
         if(nextElement.contains("Monster")) {
@@ -369,6 +391,10 @@ public class Controller implements IController, Observer {
         }
     }
 
+    /**
+     * Swap monster in tileMap and detect collision
+     * @param monster
+     */
     private void moveMonster(IMonster monster) {
         Point pos = monster.getPos().getLocation();
         Point nextPos = this.computeNextPos(
@@ -392,7 +418,12 @@ public class Controller implements IController, Observer {
         }
     }
 
-    private Point computeNextPos(MobileOrder direction, Point currentPos) {
+    /**
+     * @param direction
+     * @param currentPos
+     * @return Position relative to direction and current position
+     */
+    public Point computeNextPos(MobileOrder direction, Point currentPos) {
         Point nextPos = currentPos.getLocation();
 
         if(direction == null)
@@ -437,6 +468,9 @@ public class Controller implements IController, Observer {
         return nextPos;
     }
 
+    /**
+     * Erase fireball from tileMap
+     */
     private void destroyFireBall() {
         if(this.fireBall != null) {
             Point pos = this.fireBall.getPos().getLocation();
@@ -445,6 +479,11 @@ public class Controller implements IController, Observer {
         }
     }
 
+    /**
+     * Update tileMap
+     * @param o
+     * @param arg
+     */
     public void update(Observable o, Object arg) {
         this.tileMap = parser(model.getMap());
         this.view.repaint();

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Hashtable;
 
@@ -31,11 +32,17 @@ public class View implements IView, Runnable {
 		SwingUtilities.invokeLater(this);
 	}
 
+	/**
+	 * @return height of window
+	 */
 	public int getHeight()
 	{
 		return this.viewFrame.getHeight();
 	}
 
+	/**
+	 * @return width of window
+	 */
 	public int getWidth()
 	{
 		return this.viewFrame.getWidth();
@@ -89,8 +96,8 @@ public class View implements IView, Runnable {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Print a message via popup
 	 *
 	 * @see contract.IView#printMessage(java.lang.String)
 	 */
@@ -102,8 +109,8 @@ public class View implements IView, Runnable {
 		return this.viewFrame.pseudo();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Enable application
 	 *
 	 * @see java.lang.Runnable#run()
 	 */
@@ -111,6 +118,11 @@ public class View implements IView, Runnable {
 		this.viewFrame.setVisible(true);
 	}
 
+	/**
+	 * Update information and refresh
+	 *
+	 * @see view.ViewPanel#paintComponents(Graphics)
+	 */
 	public void repaint(){
 		this.viewFrame.update();
 	}
@@ -120,6 +132,8 @@ public class View implements IView, Runnable {
 	 *
 	 * @param controller
 	 *          the new controller
+	 *
+	 * @see contract.IController
 	 */
 	public void setController(final IController controller) {
 		this.viewFrame.setController(controller);

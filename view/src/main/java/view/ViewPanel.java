@@ -52,12 +52,13 @@ class ViewPanel extends JPanel {
 		this.viewFrame = viewFrame;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	public void update(IElement[][] tileMap) {
+    /**
+     * Setup tileMap in ViewPanel
+     * @param tileMap
+     *
+     * @see contract.IController#parser(String)
+     */
+    public void update(IElement[][] tileMap) {
         this.tileMap = tileMap;
 		this.setSize(this.tileMap[0].length, this.tileMap.length);
 		this.repaint();
@@ -75,8 +76,8 @@ class ViewPanel extends JPanel {
         this.viewFrame.setSize(width*32, height*32 + 40);
     }
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Refresh score using tileMap
 	 *
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */

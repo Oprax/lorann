@@ -139,6 +139,9 @@ class ViewFrame extends JFrame implements KeyListener {
 		this.setLocationRelativeTo(null);
 	}
 
+	/**
+	 * Update tileMap information
+	 */
 	public void update() {
 		this.viewPanel.update(
                 this.controller.getTileMap()
@@ -175,8 +178,8 @@ class ViewFrame extends JFrame implements KeyListener {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Execute when user press a key
 	 *
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
@@ -193,6 +196,10 @@ class ViewFrame extends JFrame implements KeyListener {
 
 	}
 
+	/**
+	 * Get user pseudo via popup form
+	 * @return user pseudo
+	 */
 	public String pseudo() {
 		return JOptionPane.showInputDialog("Pseudo");
 	}

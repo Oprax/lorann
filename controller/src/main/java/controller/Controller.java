@@ -18,7 +18,7 @@ public class Controller implements IController, Observer {
      */
     private IElement[][] tileMap;
 
-	/** The model. */
+    /** The model. */
 	private IModel model;
 
     /**
@@ -80,6 +80,20 @@ public class Controller implements IController, Observer {
      */
     public int getScore() {
         return score;
+    }
+
+    /**
+     * @return Hero
+     */
+    public IHero getHero() {
+        return hero;
+    }
+
+    /**
+     * @return FireBall
+     */
+    public IFireball getFireBall() {
+        return fireBall;
     }
 
     /**
@@ -259,6 +273,7 @@ public class Controller implements IController, Observer {
                 break;
             case WORKSHOP:
                 this.model.loadMap("WORKSHOP");
+                this.level = 0;
                 break;
             case MOVEDOWN:
                 this.moveHero(MobileOrder.Down);
@@ -277,6 +292,7 @@ public class Controller implements IController, Observer {
                 break;
 			default:
                 this.model.loadMap("TEST");
+                this.level = 0;
 				break;
 		}
 	}

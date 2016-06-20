@@ -31,6 +31,16 @@ public interface IController {
 	int getScore();
 
 	/**
+	 * @return Hero
+	 */
+	IHero getHero();
+
+	/**
+	 * @return FireBall
+	 */
+	IFireball getFireBall();
+
+	/**
 	 * @return Level
 	 */
 	int getLevel();

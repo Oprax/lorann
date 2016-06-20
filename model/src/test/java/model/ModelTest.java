@@ -59,14 +59,6 @@ public class ModelTest {
 	public void tearDown() throws Exception {
 	}
 
-	/**
-	 * Test method for {@link model.Model#getMessage()}.
-	 */
-	
-	/**
-	 * Test method for {@link model.Model#loadMessage(java.lang.String)}.
-	 */
-
 
 	@Test
 	public void testGetObservable() throws Exception {

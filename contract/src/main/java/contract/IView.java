@@ -7,6 +7,9 @@ package contract;
  */
 public interface IView {
 
+	/**
+	 * @param controller
+	 */
 	void setController(IController controller);
 
 	void repaint();

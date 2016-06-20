@@ -8,7 +8,7 @@ package contract;
 public interface IController {
 
 	/**
-	 * Control.
+	 * Start the main gameloop.
 	 */
 	void start();
 
@@ -20,10 +20,24 @@ public interface IController {
 	 */
 	void orderPerform(ControllerOrder controllerOrder);
 
+	/**
+	 * @return tileMap
+	 */
 	IElement[][] getTileMap();
 
+	/**
+	 * @return Score
+	 */
 	int getScore();
-    int getLevel();
 
-	IElement[][] parser(String tilemap);
+	/**
+	 * @return Level
+	 */
+	int getLevel();
+
+    /**
+     * @param tilemap String representing map with binding of letter with Element
+     * @return 2-dimensional array representing game (map + mobile)
+     */
+    IElement[][] parser(String tilemap);
 }

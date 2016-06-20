@@ -2,7 +2,7 @@ package contract;
 
 /**
  * The Enum ControllerOrder.
- * List all Map
+ * List all Map and hero movement
  *
  * @author Romain Muller
  */

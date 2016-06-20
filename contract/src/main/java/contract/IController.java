@@ -9,28 +9,34 @@ public interface IController {
 
 	/**
 	 * Start the main gameloop.
+     * @author Dorian
 	 */
 	void start();
 
 	/**
 	 * Order perform.
-	 *
 	 * @param controllerOrder
-	 *          the controller order
+	 * Method use in every mobile object, and also when load map, to execute the predefined order contain in the ControllerOrder list
+	 * @author Dorian
 	 */
 	void orderPerform(ControllerOrder controllerOrder);
 
 	/**
+     * Dynamically resize the window view according to the map size
 	 * @return tileMap
+     * @author Dorian
 	 */
 	IElement[][] getTileMap();
 
 	/**
+     * Get the score made at the end of the game (win or loose) for POPUP
 	 * @return Score
+     * @author Dorian
 	 */
 	int getScore();
 
 	/**
+<<<<<<< HEAD
 	 * @return Hero
 	 */
 	IHero getHero();
@@ -41,13 +47,18 @@ public interface IController {
 	IFireball getFireBall();
 
 	/**
+=======
+     * Get the level according to the number of the map played for the draw string at the bottom of the window
+>>>>>>> master
 	 * @return Level
+     * @author Dorian
 	 */
 	int getLevel();
 
     /**
      * @param tilemap String representing map with binding of letter with Element
      * @return 2-dimensional array representing game (map + mobile)
+     * @author Romain
      */
     IElement[][] parser(String tilemap);
 }

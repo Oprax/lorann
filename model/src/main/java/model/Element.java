@@ -8,24 +8,12 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Quentin Strinati on 13/06/2016.
+ * Created by Yog on 13/06/2016.
  */
-
-/** The class that creates an element, implementing IElement */
 public abstract class Element implements IElement {
-    /**
-     * Variable containing the image
-     */
     protected BufferedImage image = null;
-    /**
-     * Variable telling if the hero can get through it or not
-     */
     protected boolean permeability;
 
-    /** Method that instantiates the Element object
-     * @param path contains path to the sprite file
-     * @param permeability tells if the hero can get through it or not
-     */
     public Element(String path, boolean permeability)
     {
         if(!path.equals("")) {
@@ -34,9 +22,6 @@ public abstract class Element implements IElement {
         this.permeability = permeability;
     }
 
-    /** Method loading the sprite
-     * @param path contains path to the sprite file
-     */
     protected void loadSprite(String path) {
         System.out.println(String.format("Working Directory = /sprite/%s", path));
         if(path == null)
@@ -51,17 +36,11 @@ public abstract class Element implements IElement {
         }
     }
 
-    /** Getting the image
-     * @return the element's image
-     */
     public BufferedImage getImage()
     {
         return this.image;
     }
 
-    /** Getting the permeability
-     * @return true if permeable, false if not
-     */
     public boolean getPermeability()
     {
         return permeability;

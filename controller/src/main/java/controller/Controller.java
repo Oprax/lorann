@@ -13,71 +13,35 @@ public class Controller implements IController, Observer {
 	/** The view. */
 	private IView view;
 
-    /**
-     * tileMap
-     */
     private IElement[][] tileMap;
 
     /** The model. */
 	private IModel model;
 
-    /**
-     * Hero
-     */
     private IHero hero;
 
-    /**
-     * Pseudo
-     */
     private String pseudo;
 
-    /**
-     * Level
-     */
     private int level = 1;
 
-    /**
-     * Score
-     */
     private int score = 0;
 
-    /**
-     * Position of Door
-     */
     private Point posDoor = null;
 
-    /**
-     * List of monster alive
-     */
     private HashMap<String, IMonster> monsters = new HashMap<String, IMonster>();
 
-    /**
-     * Fireball
-     */
     private IFireball fireBall;
 
-    /**
-     * Boolean representing hero
-     */
     private boolean dead = false;
 
-    /**
-     * @return return tileMap
-     */
     public IElement[][] getTileMap() {
         return tileMap;
     }
 
-    /**
-     * @return Level
-     */
     public int getLevel() {
         return level;
     }
 
-    /**
-     * @return Score
-     */
     public int getScore() {
         return score;
     }
@@ -112,9 +76,21 @@ public class Controller implements IController, Observer {
         model.getObservable().addObserver(this);
 	}
 
+    private void printTileMap(IElement[][] tileMap) {
+        System.out.println("[");
+        for(int i =0; i < tileMap.length; i++) {
+            System.out.print("    [");
+            for(int j = 0; j < tileMap[0].length; j++) {
+                System.out.print(tileMap[i][j].getClass().getSimpleName()
+                        + ", ");
+            }
+            System.out.println("]");
+        }
+        System.out.println("]");
+    }
+
 	/**
 	 * Entry point of Controller
-     * Launch GameLoop
 	 * 
 	 * @see contract.IController#start()
 	 */
@@ -297,9 +273,6 @@ public class Controller implements IController, Observer {
 		}
 	}
 
-    /**
-     * Launch a fireball and prepare animation
-     */
     private void fire() {
         if(this.fireBall != null)
             return;
@@ -346,11 +319,6 @@ public class Controller implements IController, Observer {
         this.view.repaint();
     }
 
-    /**
-     * Compute next position and detect collision
-     *
-     * @see controller.Controller#swapFireBall(Point)
-     */
     private void moveFireBall() {
         Point currentPos = this.fireBall.getPos().getLocation();
         MobileOrder direction = this.fireBall.getDirection();
@@ -379,10 +347,6 @@ public class Controller implements IController, Observer {
         }
     }
 
-    /**
-     * Swap the fireball in tileMap
-     * @param nextPos
-     */
     private void swapFireBall(Point nextPos) {
         String nextElement = this.tileMap[nextPos.x][nextPos.y].getClass().getSimpleName();
         if(nextElement.contains("Monster")) {
@@ -405,10 +369,6 @@ public class Controller implements IController, Observer {
         }
     }
 
-    /**
-     * Swap monster in tileMap and detect collision
-     * @param monster
-     */
     private void moveMonster(IMonster monster) {
         Point pos = monster.getPos().getLocation();
         Point nextPos = this.computeNextPos(
@@ -432,11 +392,6 @@ public class Controller implements IController, Observer {
         }
     }
 
-    /**
-     * @param direction
-     * @param currentPos
-     * @return Position relative to direction and current position
-     */
     private Point computeNextPos(MobileOrder direction, Point currentPos) {
         Point nextPos = currentPos.getLocation();
 
@@ -482,9 +437,6 @@ public class Controller implements IController, Observer {
         return nextPos;
     }
 
-    /**
-     * Erase fireball from tileMap
-     */
     private void destroyFireBall() {
         if(this.fireBall != null) {
             Point pos = this.fireBall.getPos().getLocation();
@@ -493,11 +445,6 @@ public class Controller implements IController, Observer {
         }
     }
 
-    /**
-     * Update tileMap
-     * @param o
-     * @param arg
-     */
     public void update(Observable o, Object arg) {
         this.tileMap = parser(model.getMap());
         this.view.repaint();

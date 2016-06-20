@@ -2,8 +2,7 @@ package contract;
 
 /**
  * The Enum ControllerOrder.
- * List all Map and hero movement
- *
+ * List all Map and hero movements
  * @author Romain Muller
  */
 public enum ControllerOrder {

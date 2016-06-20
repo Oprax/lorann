@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * List of the directions possible
+ * @author Dorian
+ */
 public enum MobileOrder {
     Right,
     Up,

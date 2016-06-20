@@ -24,6 +24,7 @@ public interface IController {
 	/**
      * Dynamically resize the window view according to the map size
 	 * @return tileMap
+     * @author Dorian
 	 */
 	IElement[][] getTileMap();
 
@@ -44,6 +45,7 @@ public interface IController {
     /**
      * @param tilemap String representing map with binding of letter with Element
      * @return 2-dimensional array representing game (map + mobile)
+     * @author Romain
      */
     IElement[][] parser(String tilemap);
 }

@@ -21,7 +21,6 @@ public interface IMobile extends IElement {
     void move(MobileOrder order);
 
     /**
-     *
      * @return the direction of the element
      * @author Dorian
      */

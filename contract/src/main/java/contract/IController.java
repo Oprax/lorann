@@ -9,12 +9,12 @@ public interface IController {
 
 	/**
 	 * Start the main gameloop.
+     * @author Dorian
 	 */
 	void start();
 
 	/**
 	 * Order perform.
-	 *
 	 * @param controllerOrder
 	 * Method use in every mobile object, and also when load map, to execute the predefined order contain in the ControllerOrder list
 	 * @author Dorian

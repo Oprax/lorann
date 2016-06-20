@@ -15,34 +15,8 @@ public class DAOGetHighscoreTest {
 
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
-    public void create() throws Exception {
+    public void getHighScore() throws Exception {
 
     }
-
-    @Test
-    public void delete() throws Exception {
-
-    }
-
-    @Test
-    public void update() throws Exception {
-
-    }
-
-    @Test
-    public void upNameAndScore() throws Exception {
-
-    }
-
-    @Test
-    public void find() throws Exception {
-
-    }
-
 }

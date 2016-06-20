@@ -57,7 +57,6 @@ class DAOUploadScore extends DAOEntityScore<UploadScore> {
             final CallableStatement call = this.getConnection().prepareCall(sql);
             call.setInt(1, score);
             call.setString(2, nickname);
-            //call.execute();
             final int row = call.executeUpdate();
             if (row > 0)
                 System.out.println("The score was uploaded to the db");

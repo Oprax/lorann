@@ -8,12 +8,12 @@ import java.sql.SQLException;
 /**
  * The Class DAOLoadMap.
  *
- * @author Cyril SNIADACH
+ * @author Quentin Strinati
  */
 class DAOUploadScore extends DAOEntityScore<UploadScore> {
 
     /**
-     * Instantiates a new DAO Load Map.
+     * Instantiates a new DAO Upload Score.
      *
      * @param connection
      *          the connection
@@ -24,48 +24,30 @@ class DAOUploadScore extends DAOEntityScore<UploadScore> {
         super(connection);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      *
-     * @see model.DAOEntity#create(model.Entity)
-     */
-    @Override
-    public boolean create(final UploadScore entity) {
-        // Not implemented
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
      *
-     * @see model.DAOEntity#delete(model.Entity)
-     */
-    @Override
-    public boolean delete(final UploadScore entity) {
-        // Not implemented
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see model.DAOEntity#update(model.Entity)
+     * @see model.DAOEntityScore#update(model.EntityScore)
      */
     @Override
     public boolean update(final UploadScore entity) {
         // Not implemented
         return false;
     }
-
+    /**
+     *
+     *
+     * @see model.DAOEntityScore#getHighScore()
+     */
     public String[][] getHighScore()
     {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      *
-     * @see model.DAOEntity#find()
+     *
+     * @see model.DAOEntityScore#upNameAndScore(int, String)
      */
     public void upNameAndScore(final int score, final String nickname) {
         //UploadScore uploadScore = new UploadScore(nickname, score);

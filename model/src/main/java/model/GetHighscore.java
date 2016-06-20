@@ -1,13 +1,13 @@
 package model;
 
 /**
- * The Class LoadMap.
+ * The Class GetHighScore.
  *
- * @author cyril SNIADACH
+ * @author Quentin Strinati
  */
 class GetHighscore extends EntityScore {
     /**
-     * Instantiates a new Get Highscore.
+     * Instantiates a new GetHighscore.
      */
     public GetHighscore() {
 

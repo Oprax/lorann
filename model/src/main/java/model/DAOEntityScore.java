@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * The Class DAOEntity.
+ * The Class DAOEntityScore.
  *
- * @author Jean-Aymeric Diet
+ * @author Quentin Strinati
  *
  * @param <E>
  *          the element type
@@ -17,7 +17,7 @@ abstract class DAOEntityScore<E extends EntityScore> {
     private final Connection connection;
 
     /**
-     * Instantiates a new DAO entity.
+     * Instantiates a new DAO entity score.
      *
      * @param connection
      *          the connection
@@ -38,24 +38,6 @@ abstract class DAOEntityScore<E extends EntityScore> {
     }
 
     /**
-     * Creates the.
-     *
-     * @param entityScore
-     *          the entityScore
-     * @return true, if successful
-     */
-    public abstract boolean create(E entityScore);
-
-    /**
-     * Delete.
-     *
-     * @param entityScore
-     *          the entityScore
-     * @return true, if successful
-     */
-    public abstract boolean delete(E entityScore);
-
-    /**
      * Update.
      *
      * @param entityScore
@@ -64,7 +46,14 @@ abstract class DAOEntityScore<E extends EntityScore> {
      */
     public abstract boolean update(E entityScore);
 
+    /** Gets the high scores
+     * @return a array of array of strings, the first column containing the nicknames et the second the scores
+     */
     public abstract String[][] getHighScore();
 
+    /** Uploads the nickname and the score
+     * @param score contains the score
+     * @param nickname contains the nickname
+     */
     public abstract void upNameAndScore(final int score, final String nickname);
 }

@@ -8,13 +8,25 @@ import contract.MobileOrder;
 import java.awt.*;
 
 /**
- * Created by Yog on 14/06/2016.
+ * Created by Quentin Strinati on 14/06/2016.
  */
+
+/** Class creating the hero extending the Mobile class and using the IHero interface */
 public class Hero extends Mobile implements IHero {
+    /**
+     * Method which constructs the Hero object
+     * @param pos variable indicating the position of the hero
+     */
     public Hero(Point pos) {
         super("lorann_b.png", true, pos);
     }
 
+    /**
+     * Method that makes the hero moves, and loads the right sprite in our tileMap
+     * @param order contains the order to give such as moving left or right
+     * @param tileMap contains the map loaded in memory which is updated each time
+     * @param view contains the view interface
+     */
     public void move(MobileOrder order, IElement[][] tileMap, IView view)
     {
         switch (order) {

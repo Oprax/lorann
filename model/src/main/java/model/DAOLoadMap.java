@@ -24,8 +24,8 @@ class DAOLoadMap extends DAOEntity<LoadMap> {
         super(connection);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     *
      *
      * @see model.DAOEntity#create(model.Entity)
      */
@@ -35,8 +35,8 @@ class DAOLoadMap extends DAOEntity<LoadMap> {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     *
      *
      * @see model.DAOEntity#delete(model.Entity)
      */
@@ -46,8 +46,8 @@ class DAOLoadMap extends DAOEntity<LoadMap> {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     *
      *
      * @see model.DAOEntity#update(model.Entity)
      */
@@ -57,8 +57,8 @@ class DAOLoadMap extends DAOEntity<LoadMap> {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     *
      *
      * @see model.DAOEntity#find(int)
      */
@@ -82,8 +82,8 @@ class DAOLoadMap extends DAOEntity<LoadMap> {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     *
      *
      * @see model.DAOEntity#find(java.lang.String)
      */

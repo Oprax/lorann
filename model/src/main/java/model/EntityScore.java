@@ -1,7 +1,9 @@
 package model;
 
 /**
- * Created by Yog on 16/06/2016.
+ * The Class EntityScore.
+ *
+ * @author Quentin Strinati
  */
 abstract public class EntityScore {
 }

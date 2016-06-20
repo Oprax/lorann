@@ -67,8 +67,8 @@ public class Model extends Observable implements IModel {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 *
 	 *
 	 * @see contract.IModel#getObservable()
 	 */
@@ -76,14 +76,16 @@ public class Model extends Observable implements IModel {
 		return this;
 	}
 
-
-	/** i added the map functions in general here*/
-
+	/** Gets the map
+	 * @return the map
+	 */
 	public String getMap() {
 		return this.map;
 	}
 
-
+	/** Sets the map
+	 * @param map contains a string which is the map
+	 */
 	private void setMap(final String map) {
 		this.map = map;
 		this.setChanged();
@@ -91,6 +93,9 @@ public class Model extends Observable implements IModel {
 	}
 
 
+	/** Loads the map from the SQL db
+	 * @param key contains the key that is linked to the map
+	 */
 	public void loadMap(String key) {
 		try {
 			final DAOLoadMap daoLoadMap = new DAOLoadMap(DBConnection.getInstance().getConnection());
@@ -100,6 +105,10 @@ public class Model extends Observable implements IModel {
 		}
 	}
 
+	/** Uploads the nickname and score to the db
+	 * @param score contains the score
+	 * @param nickname contains the nickname
+	 */
 	public void upNameAndScore(final int score, final String nickname)
 	{
 		try
@@ -113,16 +122,9 @@ public class Model extends Observable implements IModel {
 		}
 	}
 
-	public void setGetHighScore(final int score)
-	{
-		this.score = score;
-	}
-
-	public int getGetHighScore()
-	{
-		return this.score;
-	}
-
+	/** Downloads the highscores from the db
+	 * @return an array containing the nicknames and the scores
+	 */
 	public String[][] getHighScore()
 	{
 		try {

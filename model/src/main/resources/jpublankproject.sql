@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 17 Juin 2016 à 12:20
+-- Généré le :  Lun 20 Juin 2016 à 07:27
 -- Version du serveur :  5.7.9
 -- Version de PHP :  5.6.16
 
@@ -136,7 +136,7 @@ INSERT INTO `map` (`id`, `map_name`, `map`) VALUES
   (8, 'MAP8', ' BHHB            \n BB2BHHB   BHHB  \n  V    BB  V4 V  \n BB BHBKVB VB V  \nBB      V  VB VB \nBC   BB BHHB  BHB\n BB   V  LB     B\n  BB  BHHB  BB  B\n   B3       BHHHB\n   BHHBBP PBV    \n      BHBBBHB    '),
   (9, 'MAP9', 'BHHBHHHBHHHHHBHHBHHB\nV  B         V  B LV\nBHB          B     V\nV  BHHHHHHHBB      V\nV          B     BVB\nV  B     C         V\nBHB    B      B    V\nV2   B  BHB BHBBBHHB\nV  V  B     3  B   V\nV  V1 V  K V   V   V\nV  V  V4   V   V   V\nBHHBHHBHHHHBHHHBHHHB'),
   (10, 'TEST', 'BVHPL\n1234 \nCO   '),
-  (17, 'MENU', 'BHHHHHHHHHHHHHHHHHHB\nV         L        V\nV  BHBHHHHHHHHBHB  V\nV    V  T     V    V\nBHHB V        V BHHB\nB  B VS       V B  B\nBB   VS       V   BB\nBBHHHBS       BHHHBB\nV    VS       V    V\nBHHHHBHHHHHHHHBHHHHB\nV         1        V\nBHHHHHHHHHHHHHHHHHHB'),
+  (17, 'MENU', 'BHHHHHHHHHHHHHHHHHHB\nV         L        V\nV  BHBHHHHHHHHBHB  V\nV    V  T     V    V\nBHHB V        V BHHB\nO  B VS       V B  O\nBB   VS       V   BB\nBBHHHBS       BHHHBB\nV    VS       V    V\nBHHHHBHHHHHHHHBHHHHB\nV         1        V\nBHHHHHHHHHHHHHHHHHHB'),
   (18, 'WORKSHOP', 'BHHHHHHHHHHHHHHHHHHB\nV                  V\nV                  V\nV                  V\nO                  V\nV        L         V\nV                  V\nV                  V\nV                  V\nV                  V\nV                  V\nBHHHHHHHHHHHHHHHHHHB');
 
 -- --------------------------------------------------------
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `score` (
   `score` int(11) NOT NULL,
   `nickname` varchar(11) NOT NULL,
   PRIMARY KEY (`score_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

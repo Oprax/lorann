@@ -1,6 +1,5 @@
 package model.mobile;
 
-import com.sun.deploy.util.ArrayUtil;
 import contract.IElement;
 import contract.IMonster;
 import contract.MobileOrder;

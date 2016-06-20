@@ -91,11 +91,11 @@ public class Controller implements IController, Observer {
      *          the model
      */
     public Controller(final IView view, final IModel model) {
+        model.getObservable().addObserver(this);
         this.setView(view);
         this.setModel(model);
-        this.tileMap = this.parser(this.model.getMap());
+
         this.hero = (IHero) model.element('L', new Point());
-        model.getObservable().addObserver(this);
     }
 
     /**
@@ -105,9 +105,9 @@ public class Controller implements IController, Observer {
      * @see contract.IController#start()
      */
     public void start() {
+        this.orderPerform(ControllerOrder.MENU);
         this.pseudo = this.view.getPseudo();
         System.out.println(this.pseudo);
-        this.orderPerform(ControllerOrder.MENU);
 
         // Game Loop
         while (true) {

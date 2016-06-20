@@ -38,7 +38,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 *           the headless exception
 	 */
 	public ViewFrame(final IModel model) throws HeadlessException {
-		this.buildViewFrame(model);
+		this.setModel(model);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 */
 	public ViewFrame(final IModel model, final GraphicsConfiguration gc) {
 		super(gc);
-		this.buildViewFrame(model);
+		this.setModel(model);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 */
 	public ViewFrame(final IModel model, final String title) throws HeadlessException {
 		super(title);
-		this.buildViewFrame(model);
+		this.setModel(model);
 	}
 
 	/**
@@ -81,7 +81,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 */
 	public ViewFrame(final IModel model, final String title, final GraphicsConfiguration gc) {
 		super(title, gc);
-		this.buildViewFrame(model);
+		this.setModel(model);
 	}
 
 	/**
@@ -101,6 +101,7 @@ class ViewFrame extends JFrame implements KeyListener {
 	 */
 	protected void setController(final IController controller) {
 		this.controller = controller;
+		this.buildViewFrame();
 	}
 
 	/**
@@ -124,13 +125,9 @@ class ViewFrame extends JFrame implements KeyListener {
 
 	/**
 	 * Builds the view frame.
-	 *
-	 * @param model
-	 *          the model
 	 */
-	private void buildViewFrame(final IModel model) {
+	private void buildViewFrame() {
 		this.viewPanel = new ViewPanel(this);
-		this.setModel(model);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.addKeyListener(this);

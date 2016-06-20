@@ -23,7 +23,6 @@ public abstract class Element implements IElement {
     }
 
     protected void loadSprite(String path) {
-        System.out.println(String.format("Working Directory = /sprite/%s", path));
         if(path == null)
             return;
         try {

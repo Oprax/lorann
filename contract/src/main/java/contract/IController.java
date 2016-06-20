@@ -16,22 +16,28 @@ public interface IController {
 	 * Order perform.
 	 *
 	 * @param controllerOrder
-	 *          the controller order
+	 * Method use in every mobile object, and also when load map, to execute the predefined order contain in the ControllerOrder list
+	 * @author Dorian
 	 */
 	void orderPerform(ControllerOrder controllerOrder);
 
 	/**
+     * Dynamically resize the window view according to the map size
 	 * @return tileMap
 	 */
 	IElement[][] getTileMap();
 
 	/**
+     * Get the score made at the end of the game (win or loose) for POPUP
 	 * @return Score
+     * @author Dorian
 	 */
 	int getScore();
 
 	/**
+     * Get the level according to the number of the map played for the draw string at the bottom of the window
 	 * @return Level
+     * @author Dorian
 	 */
 	int getLevel();
 

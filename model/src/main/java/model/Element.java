@@ -3,8 +3,6 @@ package model;
 import contract.IElement;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,14 +17,19 @@ public abstract class Element implements IElement {
     public Element(String path, boolean permeability)
     {
         if(!path.equals("")) {
-            this.loadSprite(String.format("sprite\\%s", path));
+            this.loadSprite(path);
         }
         this.permeability = permeability;
     }
 
     protected void loadSprite(String path) {
+        System.out.println(String.format("Working Directory = /sprite/%s", path));
+        if(path == null)
+            return;
         try {
-            this.image = ImageIO.read(new File(path));
+            this.image = ImageIO.read(
+                    getClass().getResource(
+                            String.format("/sprite/%s", path)));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.printf("Pathname is '%s'%n", path);

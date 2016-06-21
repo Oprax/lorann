@@ -32,9 +32,6 @@ public class Monster1 extends Mobile implements IMonster {
 
         Point pos = this.getPos().getLocation();
 
-        System.out.printf("Hero : %s%n", heroPos);
-        System.out.printf("Monster : %s%n", pos);
-
         MobileOrder direction = MobileOrder.random();
 
         int distance = 10000;
@@ -51,8 +48,6 @@ public class Monster1 extends Mobile implements IMonster {
                 }
             }
         }
-
-        System.out.printf("Dir : %s%n", direction);
 
         return direction;
     }

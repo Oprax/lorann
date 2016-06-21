@@ -2,6 +2,7 @@ package model.mobile;
 
 import contract.IFireball;
 import contract.MobileOrder;
+import model.Element;
 
 import java.awt.*;
 
@@ -38,7 +39,7 @@ public class FireBall extends Mobile implements IFireball {
     public void animate() {
         this.step++;
         if(this.step > 0 && this.step < 6) {
-            this.loadSprite(String.format("fireball_%d.png", this.step));
+            this.image = Element.loadSprite(String.format("fireball_%d.png", this.step));
         }
     }
 }

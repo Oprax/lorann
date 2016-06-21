@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by Yog on 13/06/2016.
@@ -13,26 +14,33 @@ import java.io.IOException;
 public abstract class Element implements IElement {
     protected BufferedImage image = null;
     protected boolean permeability;
+    static HashMap<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 
     public Element(String path, boolean permeability)
     {
         if(!path.equals("")) {
-            this.loadSprite(path);
+            this.image = Element.loadSprite(path);
         }
         this.permeability = permeability;
     }
 
-    protected void loadSprite(String path) {
+    static protected BufferedImage loadSprite(String path) {
         if(path == null)
-            return;
-        try {
-            this.image = ImageIO.read(
-                    getClass().getResource(
-                            String.format("/sprite/%s", path)));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.printf("Pathname is '%s'%n", path);
+            return null;
+
+        if(!Element.images.containsKey(path)) {
+            System.out.printf("Load '%s'%n", path);
+            try {
+                Element.images.put(path, ImageIO.read(
+                        Element.class.getResource(
+                                String.format("/sprite/%s", path))));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.printf("Pathname is '%s'%n", path);
+            }
         }
+
+        return Element.images.get(path);
     }
 
     public BufferedImage getImage()

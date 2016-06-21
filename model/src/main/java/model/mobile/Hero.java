@@ -4,6 +4,7 @@ import contract.IElement;
 import contract.IHero;
 import contract.IView;
 import contract.MobileOrder;
+import model.Element;
 
 import java.awt.*;
 
@@ -39,7 +40,7 @@ public class Hero extends Mobile implements IHero {
                             this.pos.getX(),
                             this.pos.getY() - 1);
                 } else {
-                    this.loadSprite("lorann_l.png");
+                    this.image = Element.loadSprite("lorann_l.png");
                 }
                 break;
             case Right:
@@ -51,7 +52,7 @@ public class Hero extends Mobile implements IHero {
                             this.pos.getX(),
                             this.pos.getY() + 1);
                 } else {
-                    this.loadSprite("lorann_r.png");
+                    this.image = Element.loadSprite("lorann_r.png");
                 }
                 break;
             case Up:
@@ -62,7 +63,7 @@ public class Hero extends Mobile implements IHero {
                             this.pos.getX() - 1,
                             this.pos.getY());
                 } else {
-                    this.loadSprite("lorann_u.png");
+                    this.image = Element.loadSprite("lorann_u.png");
                 }
                 break;
             case Down:
@@ -73,7 +74,7 @@ public class Hero extends Mobile implements IHero {
                             this.pos.getX() + 1,
                             this.pos.getY());
                 } else {
-                    this.loadSprite("lorann_b.png");
+                    this.image = Element.loadSprite("lorann_b.png");
                 }
                 break;
         }

@@ -62,6 +62,11 @@ public class Controller implements IController, Observer {
     private boolean dead = false;
 
     /**
+     * Parser
+     */
+    private boolean parser = false;
+
+    /**
      * @return return tileMap
      */
     public IElement[][] getTileMap() {
@@ -111,7 +116,7 @@ public class Controller implements IController, Observer {
 
         // Game Loop
         while (true) {
-            if(this.fireBall != null) {
+            if(this.fireBall != null && !this.parser) {
                 this.moveFireBall();
             }
 
@@ -123,16 +128,18 @@ public class Controller implements IController, Observer {
                 this.score = 0;
             }
 
-            for (Object o : this.monsters.entrySet()) {
-                Map.Entry pair = (Map.Entry) o;
-                IMonster monster = (IMonster) pair.getValue();
-                this.moveMonster(monster);
+            if(!this.parser) {
+                for (Object o : this.monsters.entrySet()) {
+                    Map.Entry pair = (Map.Entry) o;
+                    IMonster monster = (IMonster) pair.getValue();
+                    this.moveMonster(monster);
+                }
             }
 
             this.view.repaint();
 
             try {
-                Thread.sleep(250);
+                Thread.sleep(200);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
@@ -167,6 +174,7 @@ public class Controller implements IController, Observer {
      * @see contract.IController#parser(String)
      */
     public IElement[][] parser(String tilemap) {
+        this.parser = true;
         String[] lines = tilemap.split("\n");
         int x = lines.length;
         int y = lines[0].length();
@@ -203,7 +211,8 @@ public class Controller implements IController, Observer {
                 }
             }
         }
-
+        System.out.println("Parse2");
+        this.parser = false;
         return map;
     }
 

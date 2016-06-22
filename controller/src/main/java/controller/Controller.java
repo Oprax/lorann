@@ -42,6 +42,11 @@ public class Controller implements IController, Observer {
     private int score = 0;
 
     /**
+     * Scores
+     */
+    private String[][] scores = null;
+
+    /**
      * Position of Door
      */
     private Point posDoor = null;
@@ -167,6 +172,10 @@ public class Controller implements IController, Observer {
     }
 
 
+    public String[][] getScores() {
+        return scores;
+    }
+
     /**
      * Parse tileMap to associate a Letter to a sprite
      *
@@ -198,13 +207,13 @@ public class Controller implements IController, Observer {
                 if(c == 'L') {
                     this.dead = false;
                     this.hero = (IHero) element;
-                }
-                if(c == '1' || c == '2' || c == '3' || c == '4') {
+                } else if(c == '1' || c == '2' || c == '3' || c == '4') {
                     IMonster monster = (IMonster) element;
                     this.monsters.put(monster.getClass().getSimpleName(), monster);
-                }
-                if(c == 'C') {
+                } else if(c == 'C') {
                     this.posDoor = pos.getLocation();
+                } else if(c == 'S') {
+                    this.scores = this.model.getHighScore();
                 }
                 if (element != null) {
                     map[i][j] = element;

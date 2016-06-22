@@ -57,4 +57,6 @@ public interface IController {
      * @author Romain
      */
     IElement[][] parser(String tilemap);
+
+	String[][] getScores();
 }

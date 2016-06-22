@@ -105,7 +105,7 @@ class ViewPanel extends JPanel {
                         graphics.drawString("HIGHSCORE", j*32, i*32 + 20);
                     } else if(tileMap[i][j].getClass().getSimpleName().contains("Score")) {
 						if (scores == null)
-							scores = this.viewFrame.getModel().getHighScore();
+							scores = this.viewFrame.getController().getScores();
 
                         if(scoreIndex < scores[0].length) {
                             graphics.drawString(
